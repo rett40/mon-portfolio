@@ -12,65 +12,118 @@ import img7 from "./screenshots/7.PNG";
 import img8 from "./screenshots/8.PNG";
 import img9 from "./screenshots/9.PNG";
 
-// Données du projet POS
+// Données du projet POS avec support multilingue
 const projects = [
   {
     id: "pos",
-    title: "Système de Gestion de Points de Vente (POS)",
-    description: (
-      <>
-        <p>
-          Solution complète de gestion commerciale pour les entreprises multi-sites avec des fonctionnalités avancées de suivi des ventes, gestion des stocks et reporting financier.
-        </p>
-
-        <h3>Fonctionnalités clés :</h3>
-        <ul>
-          <li><strong>Gestion des utilisateurs</strong> avec système de rôles (Admin, Caissier)</li>
-          <li><strong>Gestion multi-magasins</strong> avec produits spécifiques par point de vente</li>
-          <li><strong>Tableau de bord analytique</strong> avec indicateurs de performance</li>
-          <li><strong>Système de caisse</strong> avec gestion des transactions</li>
-          <li><strong>Reporting complet</strong> avec export PDF/Excel</li>
-          <li><strong>Historique des ventes</strong> et gestion des clôtures de caisse</li>
-        </ul>
-
-        <h3>Technologies utilisées :</h3>
-        <div className="tech-tags">
-          <span>React.js</span>
-          <span>Node.js</span>
-          <span>Express</span>
-          <span>MySQL</span>
-          <span>JWT</span>
-          <span>Chart.js</span>
-        </div>
-      </>
-    ),
+    title: {
+      fr: "Système de Gestion de Points de Vente (POS)",
+      en: "Point of Sale Management System (POS)"
+    },
+    description: {
+      fr: (
+        <>
+          <p>
+            Solution complète de gestion commerciale pour les entreprises multi-sites avec des fonctionnalités avancées de suivi des ventes, gestion des stocks et reporting financier.
+          </p>
+          <h3>Fonctionnalités clés :</h3>
+          <ul>
+            <li><strong>Gestion des utilisateurs</strong> avec système de rôles (Admin, Caissier)</li>
+            <li><strong>Gestion multi-magasins</strong> avec produits spécifiques par point de vente</li>
+            <li><strong>Tableau de bord analytique</strong> avec indicateurs de performance</li>
+            <li><strong>Système de caisse</strong> avec gestion des transactions</li>
+            <li><strong>Reporting complet</strong> avec export PDF/Excel</li>
+            <li><strong>Historique des ventes</strong> et gestion des clôtures de caisse</li>
+          </ul>
+          <h3>Technologies utilisées :</h3>
+          <div className="tech-tags">
+            <span>React.js</span>
+            <span>Node.js</span>
+            <span>Express</span>
+            <span>MySQL</span>
+            <span>JWT</span>
+            <span>Chart.js</span>
+          </div>
+        </>
+      ),
+      en: (
+        <>
+          <p>
+            Complete business management solution for multi-site companies with advanced features for sales tracking, inventory management, and financial reporting.
+          </p>
+          <h3>Key Features:</h3>
+          <ul>
+            <li><strong>User management</strong> with role system (Admin, Cashier)</li>
+            <li><strong>Multi-store management</strong> with store-specific products</li>
+            <li><strong>Analytical dashboard</strong> with performance indicators</li>
+            <li><strong>Cash register system</strong> with transaction management</li>
+            <li><strong>Comprehensive reporting</strong> with PDF/Excel export</li>
+            <li><strong>Sales history</strong> and cash register closing management</li>
+          </ul>
+          <h3>Technologies used:</h3>
+          <div className="tech-tags">
+            <span>React.js</span>
+            <span>Node.js</span>
+            <span>Express</span>
+            <span>MySQL</span>
+            <span>JWT</span>
+            <span>Chart.js</span>
+          </div>
+        </>
+      )
+    },
     github: "https://github.com/tonrepo/pos-system",
     screenshots: [
-      { url: img2, alt: "Gestion des utilisateurs" },
-      { url: img3, alt: "Gestion des produits et catégories" },
-      { url: img4, alt: "Gestion des points de vente" },
-      { url: img5, alt: "Historique des factures" },
-      { url: img6, alt: "Rapport de facturation globale" },
-      { url: img7, alt: "Tableau de bord" },
-      { url: img8, alt: "Liste des clôtures" },
-      { url: img9, alt: "Espace caissier" }
+      { url: img2, alt: { fr: "Gestion des utilisateurs", en: "User management" } },
+      { url: img3, alt: { fr: "Gestion des produits et catégories", en: "Product and category management" } },
+      { url: img4, alt: { fr: "Gestion des points de vente", en: "Store management" } },
+      { url: img5, alt: { fr: "Historique des factures", en: "Invoice history" } },
+      { url: img6, alt: { fr: "Rapport de facturation globale", en: "Global billing report" } },
+      { url: img7, alt: { fr: "Tableau de bord", en: "Dashboard" } },
+      { url: img8, alt: { fr: "Liste des clôtures", en: "Closings list" } },
+      { url: img9, alt: { fr: "Espace caissier", en: "Cashier area" } }
     ]
   }
 ];
 
-export default function ProjectDetail() {
+// Récupère la langue et le thème depuis les props, défaut "fr" et "light"
+export default function ProjectDetail({ lang = "fr", theme = "light" }) {
   const { id } = useParams();
   const navigate = useNavigate();
   const project = projects.find((p) => p.id === id);
   const [selectedImage, setSelectedImage] = useState(null);
 
+  // Textes multilingues pour l'UI
+  const ui = {
+    back: {
+      fr: "Retour aux projets",
+      en: "Back to projects"
+    },
+    notFound: {
+      fr: "Projet introuvable",
+      en: "Project not found"
+    },
+    code: {
+      fr: "Code source",
+      en: "Source code"
+    },
+    demo: {
+      fr: "Voir la démo",
+      en: "View demo"
+    },
+    screenshots: {
+      fr: "Captures d'écran",
+      en: "Screenshots"
+    }
+  };
+
   if (!project) {
     return (
-      <div className="container">
+      <div className={`container ${theme}`}>
         <button className="back-button" onClick={() => navigate(-1)}>
-          <FaArrowLeft /> Retour
+          <FaArrowLeft /> {ui.back[lang]}
         </button>
-        <p>Projet introuvable</p>
+        <p>{ui.notFound[lang]}</p>
       </div>
     );
   }
@@ -86,17 +139,17 @@ export default function ProjectDetail() {
   };
 
   return (
-    <div className="project-detail-container">
+    <div className={`project-detail-container ${theme}`}>
       <button className="back-button" onClick={() => navigate(-1)}>
-        <FaArrowLeft /> Retour aux projets
+        <FaArrowLeft /> {ui.back[lang]}
       </button>
 
       <header className="project-header">
-        <h1>{project.title}</h1>
+        <h1>{project.title[lang]}</h1>
       </header>
 
       <section className="project-content">
-        <div className="project-description">{project.description}</div>
+        <div className="project-description">{project.description[lang]}</div>
 
         <div className="project-links">
           <a
@@ -105,7 +158,7 @@ export default function ProjectDetail() {
             rel="noopener noreferrer"
             className="project-link"
           >
-            <FaGithub /> Code source
+            <FaGithub /> {ui.code[lang]}
           </a>
           {project.demo && (
             <a
@@ -114,14 +167,14 @@ export default function ProjectDetail() {
               rel="noopener noreferrer"
               className="project-link"
             >
-              <FaExternalLinkAlt /> Voir la démo
+              <FaExternalLinkAlt /> {ui.demo[lang]}
             </a>
           )}
         </div>
 
         {project.screenshots && (
           <section className="screenshots-section">
-            <h2>Captures d'écran</h2>
+            <h2>{ui.screenshots[lang]}</h2>
             <div className="screenshots-grid">
               {project.screenshots.map((screenshot, index) => (
                 <div 
@@ -131,10 +184,10 @@ export default function ProjectDetail() {
                 >
                   <img
                     src={screenshot.url}
-                    alt={screenshot.alt}
+                    alt={screenshot.alt[lang]}
                     className="screenshot-image"
                   />
-                  <p className="screenshot-caption">{screenshot.alt}</p>
+                  <p className="screenshot-caption">{screenshot.alt[lang]}</p>
                 </div>
               ))}
             </div>
@@ -150,10 +203,10 @@ export default function ProjectDetail() {
             </button>
             <img 
               src={selectedImage.url} 
-              alt={selectedImage.alt} 
+              alt={selectedImage.alt[lang]} 
               className="lightbox-image" 
             />
-            <p className="lightbox-caption">{selectedImage.alt}</p>
+            <p className="lightbox-caption">{selectedImage.alt[lang]}</p>
           </div>
         </div>
       )}
@@ -165,6 +218,12 @@ export default function ProjectDetail() {
           padding: 2rem;
           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
           color: #333;
+          background: #f7f9fa;
+          transition: background 0.3s, color 0.3s;
+        }
+        .dark.project-detail-container {
+          background: #181c22;
+          color: #f7f9fa;
         }
 
         .back-button {
@@ -197,6 +256,9 @@ export default function ProjectDetail() {
           position: relative;
           padding-bottom: 0.5rem;
         }
+        .dark .project-header h1 {
+          color: #e0e6ed;
+        }
 
         .project-header h1::after {
           content: '';
@@ -213,6 +275,10 @@ export default function ProjectDetail() {
           line-height: 1.7;
           margin-bottom: 2rem;
           font-size: 1.1rem;
+          color: #333;
+        }
+        .dark .project-description {
+          color: #e0e6ed;
         }
 
         .project-description p {
@@ -224,6 +290,9 @@ export default function ProjectDetail() {
           margin: 2rem 0 1rem;
           font-size: 1.4rem;
           font-weight: 600;
+        }
+        .dark .project-description h3 {
+          color: #e0e6ed;
         }
 
         .project-description ul {
@@ -261,6 +330,10 @@ export default function ProjectDetail() {
           font-weight: 600;
           box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
+        .dark .tech-tags span {
+          background: #263445;
+          color: #7fd8e7;
+        }
 
         .project-links {
           display: flex;
@@ -281,11 +354,18 @@ export default function ProjectDetail() {
           font-weight: 500;
           box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
+        .dark .project-link {
+          background: linear-gradient(135deg, #263445, #2ecc71);
+          color: #f7f9fa;
+        }
 
         .project-link:hover {
           transform: translateY(-3px);
           box-shadow: 0 5px 15px rgba(0,0,0,0.2);
           background: linear-gradient(135deg, #2980b9, #27ae60);
+        }
+        .dark .project-link:hover {
+          background: linear-gradient(135deg, #1a252f, #27ae60);
         }
 
         .screenshots-section {
@@ -299,6 +379,9 @@ export default function ProjectDetail() {
           font-weight: 600;
           position: relative;
           padding-bottom: 0.5rem;
+        }
+        .dark .screenshots-section h2 {
+          color: #e0e6ed;
         }
 
         .screenshots-section h2::after {
@@ -326,6 +409,10 @@ export default function ProjectDetail() {
           transition: all 0.3s ease;
           cursor: pointer;
         }
+        .dark .screenshot-item {
+          background: #23272f;
+          color: #f7f9fa;
+        }
 
         .screenshot-item:hover {
           transform: translateY(-5px);
@@ -333,8 +420,8 @@ export default function ProjectDetail() {
         }
 
         .screenshot-image {
-          width: 200%;
-          height: 400px;
+          max-width: 100%;
+          max-height: 100%;
           object-fit: cover;
           border-bottom: 1px solid #eee;
           transition: transform 0.3s ease;
@@ -351,6 +438,10 @@ export default function ProjectDetail() {
           color: #555;
           text-align: center;
           background: #f9f9f9;
+        }
+        .dark .screenshot-caption {
+          background: #23272f;
+          color: #e0e6ed;
         }
 
         /* Lightbox styles */
