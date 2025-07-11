@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./Home";
 import ProjectDetail from "./ProjectDetail";
 import ProjectDetails1 from "./projectDetails1";
+import BIVermeg from './bi_project';
 
 function App() {
   const [lang, setLang] = useState("fr");
@@ -66,6 +67,7 @@ function App() {
           <Route path="/" element={<Home lang={lang} theme={theme} />} />
           <Route path="/projet/:id" element={<ProjectDetail lang={lang} theme={theme} />} />
           <Route path="/machine-learning" element={<ProjectDetails1 lang={lang} theme={theme} />} />
+          <Route path="/bi-vermeg" element={<BIVermeg lang={lang} theme={theme} />} />
         </Routes>
 
         {/* Global theme styles */}

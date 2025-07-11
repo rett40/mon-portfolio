@@ -2,7 +2,10 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { FaCode, FaDatabase, FaChartLine, FaTools } from "react-icons/fa";
 import img1 from './screenshots/1.jpg';
+import img2 from './screenshots/2.jpg';
+import img3 from './screenshots/3.jpeg';
 import profilePhoto from './screenshots/profile.jpg';
+
 
 // Multilingual content for projects and UI
 const projects = [
@@ -25,20 +28,33 @@ const projects = [
       fr: "Prédiction du niveau d'obésité",
       en: "Obesity Level Prediction"
     },
-    image: img1,
+    image: img2,
     summary: {
       fr: "Projet Data Science pour prédire le niveau d’obésité à partir des habitudes alimentaires et de l’activité physique.",
       en: "Data Science project to predict obesity level from eating habits and physical activity."
     },
     tags: ["Python", "Flask", "scikit-learn", "Machine Learning"]
-  }
+  },
+  {
+  id: "bi-vermeg",
+  title: {
+    fr: "Projet BI – Gestion Jira (VERMEG)",
+    en: "BI Project – Jira Management (VERMEG)"
+  },
+  image: img3,
+  summary: {
+    fr: "Solution décisionnelle pour optimiser la gestion des licences Jira via Power BI, Talend et Power Apps.",
+    en: "Business Intelligence solution to optimize Jira license management using Power BI, Talend and Power Apps."
+  },
+  tags: ["Power BI", "Talend", "MySQL", "Power Apps"]
+}
 ];
 
 // Multilingual UI texts
 const texts = {
   fr: {
     name: "Aziz Ben Mohamed",
-    subtitle: "Développeur Full-Stack & Data Scientist",
+    subtitle: "Data analyst & Data Scientist",
     aboutTitle: "À Propos",
     about: "Diplômé en Informatique de Gestion et actuellement en master d'Ingénierie des Systèmes d'Information et Data Science, je suis passionné par l'analyse de données, la Business Intelligence et le développement web. Je maîtrise des outils et technologies tels que Power BI, SQL, React et Next.js, que j'utilise pour transformer les données en décisions stratégiques et créer des applications performantes.",
     skillsTitle: "Compétences Techniques",
@@ -50,7 +66,7 @@ const texts = {
   },
   en: {
     name: "Aziz Ben Mohamed",
-    subtitle: "Full-Stack Developer & Data Scientist",
+    subtitle: "Data analyst & Data Scientist",
     aboutTitle: "About",
     about: "Graduated in Management IT and currently pursuing a master's in Information Systems Engineering and Data Science, I am passionate about data analysis, Business Intelligence, and web development. I master tools and technologies such as Power BI, SQL, React, and Next.js, which I use to turn data into strategic decisions and create high-performance applications.",
     skillsTitle: "Technical Skills",
@@ -149,12 +165,14 @@ export default function Home({ lang = "fr", theme = "light" }) {
               key={project.id} 
               className="project-card"
               onClick={() => {
-                if (project.id === "machine-learning") {
-                  navigate("/machine-learning");
-                } else {
-                  navigate(`/projet/${project.id}`);
-                }
-              }}
+  if (project.id === "machine-learning") {
+    navigate("/machine-learning");
+  } else if (project.id === "bi-vermeg") {
+    navigate("/bi-vermeg");
+  } else {
+    navigate(`/projet/${project.id}`);
+  }
+}}
             >
               <div className="project-image-container">
                 <img 
