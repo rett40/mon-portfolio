@@ -4,7 +4,9 @@ import Home from "./Home";
 import ProjectDetail from "./ProjectDetail";
 import ProjectDetails1 from "./projectDetails1";
 import BIVermeg from './bi_project';
-
+import RfmProject from './RfmProject';
+import BigData from './bigdata';
+import MovieRecommender from './MovieRecommender';
 function App() {
   const [lang, setLang] = useState("fr");
   const [theme, setTheme] = useState("light");
@@ -68,6 +70,9 @@ function App() {
           <Route path="/projet/:id" element={<ProjectDetail lang={lang} theme={theme} />} />
           <Route path="/machine-learning" element={<ProjectDetails1 lang={lang} theme={theme} />} />
           <Route path="/bi-vermeg" element={<BIVermeg lang={lang} theme={theme} />} />
+          <Route path="/rfmProject" element={<RfmProject lang={lang} theme={theme} />} />
+          <Route path="/bigdata" element={<BigData lang={lang} theme={theme} />} />
+          <Route path="/movie-recommender" element={<MovieRecommender lang={lang} theme={theme} />} />
         </Routes>
 
         {/* Global theme styles */}

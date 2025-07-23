@@ -4,6 +4,9 @@ import { FaCode, FaDatabase, FaChartLine, FaTools } from "react-icons/fa";
 import img1 from './screenshots/1.jpg';
 import img2 from './screenshots/2.jpg';
 import img3 from './screenshots/3.jpeg';
+import img4 from './screenshots/rfm.png';
+import img5 from './screenshots/big0.jpg';
+import img6 from './screenshots/movies.jfif';
 import profilePhoto from './screenshots/profile.jpg';
 
 
@@ -47,7 +50,48 @@ const projects = [
     en: "Business Intelligence solution to optimize Jira license management using Power BI, Talend and Power Apps."
   },
   tags: ["Power BI", "Talend", "MySQL", "Power Apps"]
+},
+{
+  id: "rfm-clustering",
+  title: {
+    fr: "Segmentation RFM & Prédiction",
+    en: "RFM Clustering & Forecasting"
+  },
+  image: img4,
+  summary: {
+    fr: "Analyse RFM avec clustering client, segmentation produit et prévision du nombre de clients et des ventes.",
+    en: "RFM analysis with customer segmentation, product clustering, and forecasting of customers and sales."
+  },
+  tags: ["Streamlit", "Python", "scikit-learn", "Pandas"]
+},
+{
+  id: "water-consumption-analysis",
+  title: {
+    fr: "Analyse Consommation Mondiale d'Eau",
+    en: "Global Water Consumption Analysis"
+  },
+  image: img5, // tu peux remplacer par une image spécifique à ce projet si tu en as une
+  summary: {
+    fr: "Analyse des données de consommation d'eau dans le monde avec visualisations, segmentation et prévisions basées sur des données nettoyées.",
+    en: "Analysis of global water consumption data with visualizations, segmentation, and forecasting based on cleaned datasets."
+  },
+  tags: ["Big Data", "PySpark", "Streamlit", "Python", "Matplotlib", "Seaborn"]
+},
+{
+  id: "movie-recommender",
+  title: {
+    fr: "Recommandateur de Films",
+    en: "Movie Recommender"
+  },
+  image: img6, // remplace par une image pertinente ou affiche une capture d’écran
+  summary: {
+    fr: "Application Streamlit pour recommander des films selon les goûts d’un ou deux utilisateurs, avec filtrage par genres, années, et notes, intégrant l’API TMDB pour les affiches.",
+    en: "Streamlit app recommending movies for one or two users with filters by genre, year, rating and TMDB API integration for posters."
+  },
+  tags: ["Python", "Streamlit", "SVD", "TMDB API", "Recommandations"]
 }
+
+
 ];
 
 // Multilingual UI texts
@@ -162,18 +206,28 @@ export default function Home({ lang = "fr", theme = "light" }) {
         <div className="projects-grid">
           {projects.map((project) => (
             <div 
-              key={project.id} 
-              className="project-card"
-              onClick={() => {
-  if (project.id === "machine-learning") {
-    navigate("/machine-learning");
-  } else if (project.id === "bi-vermeg") {
-    navigate("/bi-vermeg");
-  } else {
-    navigate(`/projet/${project.id}`);
-  }
-}}
-            >
+  key={project.id} 
+  className="project-card"
+  onClick={() => {
+    if (project.id === "machine-learning") {
+      navigate("/machine-learning");
+    } else if (project.id === "bi-vermeg") {
+      navigate("/bi-vermeg");
+    } else if (project.id === "rfm-clustering") {
+      navigate("/Rfmproject");
+    }  else if (project.id === "water-consumption-analysis") {
+      navigate("/bigdata");
+      }  else if (project.id === "movie-recommender") {
+      navigate("/movie-recommender");
+    } else {
+      navigate(`/projet/${project.id}`);
+    }
+  }}
+>
+
+
+
+            
               <div className="project-image-container">
                 <img 
                   src={project.image} 

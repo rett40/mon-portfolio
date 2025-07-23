@@ -120,7 +120,6 @@ const project = {
     ],
     en: [
       "Analysis of available Jira data",
-      "Collection via REST API and storage in SQL Server",
       "Dimensional modeling (facts/dimensions)",
       "ETL processing with Talend",
       "Building Power BI dashboards",
