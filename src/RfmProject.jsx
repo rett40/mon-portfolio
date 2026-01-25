@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaArrowLeft, FaGithub, FaImages, FaProjectDiagram, FaChartLine, FaTools, FaTimes } from "react-icons/fa";
+import { FaArrowLeft, FaGithub, FaImages, FaProjectDiagram, FaChartLine, FaTools, FaTimes, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 // Import des images
@@ -28,8 +28,8 @@ const project = {
         <ul>
           <li>Segmenter les clients selon leur comportement d'achat.</li>
           <li>Analyser et classifier les produits vendus.</li>
-          <li>Prédire l’évolution des ventes et du nombre de clients.</li>
-          <li>Visualiser les résultats dans une interface web .</li>
+          <li>Prédire l'évolution des ventes et du nombre de clients.</li>
+          <li>Visualiser les résultats dans une interface web.</li>
         </ul>
       </>
     ),
@@ -43,7 +43,7 @@ const project = {
           <li>Segment customers based on purchase behavior.</li>
           <li>Analyze and classify sold products.</li>
           <li>Predict sales and customer count trends.</li>
-          <li>Visualize results on a web interface .</li>
+          <li>Visualize results on a web interface.</li>
         </ul>
       </>
     )
@@ -66,7 +66,7 @@ const project = {
       "Segmentation avec KMeans et CAH",
       "Clustering des produits vendus",
       "Modélisation et prévision par séries temporelles",
-      "Création d’une interface web avec Streamlit"
+      "Création d'une interface web avec Streamlit"
     ],
     en: [
       "Calculate and normalize RFM scores",
@@ -77,7 +77,7 @@ const project = {
     ]
   },
   impact: {
-    fr: "Cette segmentation a permis d’améliorer le ciblage marketing et d’anticiper les tendances des ventes.",
+    fr: "Cette segmentation a permis d'améliorer le ciblage marketing et d'anticiper les tendances des ventes.",
     en: "This segmentation improved marketing targeting and forecasted sales trends."
   },
   tags: {
@@ -98,6 +98,37 @@ const ui = {
 export default function RfmProject({ lang = "fr", theme = "light" }) {
   const navigate = useNavigate();
   const [selectedImage, setSelectedImage] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const openImage = (img) => {
+    const index = project.screenshots.findIndex(s => s.url === img.url);
+    setSelectedImage(img);
+    setCurrentIndex(index);
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeImage = () => {
+    setSelectedImage(null);
+    document.body.style.overflow = 'auto';
+  };
+
+  const showPrev = (e) => {
+    e.stopPropagation();
+    if (currentIndex > 0) {
+      const newIndex = currentIndex - 1;
+      setSelectedImage(project.screenshots[newIndex]);
+      setCurrentIndex(newIndex);
+    }
+  };
+
+  const showNext = (e) => {
+    e.stopPropagation();
+    if (currentIndex < project.screenshots.length - 1) {
+      const newIndex = currentIndex + 1;
+      setSelectedImage(project.screenshots[newIndex]);
+      setCurrentIndex(newIndex);
+    }
+  };
 
   return (
     <div className={`project-detail-container ${theme}`}>
@@ -130,7 +161,7 @@ export default function RfmProject({ lang = "fr", theme = "light" }) {
           <h2><FaImages className="mr-2" />{ui.gallery[lang]}</h2>
           <div className="screenshots-grid">
             {project.screenshots.map((img, i) => (
-              <div key={i} className="screenshot-item" onClick={() => setSelectedImage(img)}>
+              <div key={i} className="screenshot-item" onClick={() => openImage(img)}>
                 <img src={img.url} alt={img.alt[lang]} className="screenshot-image" />
                 <p className="screenshot-caption">{img.alt[lang]}</p>
               </div>
@@ -165,18 +196,34 @@ export default function RfmProject({ lang = "fr", theme = "light" }) {
       </section>
 
       {selectedImage && (
-        <div className="lightbox" onClick={() => setSelectedImage(null)}>
+        <div className="lightbox" onClick={closeImage}>
+          <button
+            className="nav-button prev"
+            onClick={showPrev}
+            aria-label="Previous image"
+            style={{ display: currentIndex > 0 ? "flex" : "none" }}
+          >
+            <FaChevronLeft />
+          </button>
           <div className="lightbox-content" onClick={e => e.stopPropagation()}>
-            <button aria-label="Close" className="close-button" onClick={() => setSelectedImage(null)}>
+            <button aria-label="Close" className="close-button" onClick={closeImage}>
               <FaTimes />
             </button>
             <img src={selectedImage.url} alt={selectedImage.alt[lang]} className="lightbox-image" />
             <p className="lightbox-caption">{selectedImage.alt[lang]}</p>
           </div>
+          <button
+            className="nav-button next"
+            onClick={showNext}
+            aria-label="Next image"
+            style={{ display: currentIndex < project.screenshots.length - 1 ? "flex" : "none" }}
+          >
+            <FaChevronRight />
+          </button>
         </div>
       )}
 
-      <style>{`
+      <style jsx>{`
         .project-detail-container {
           max-width: 1200px;
           margin: 0 auto;
@@ -269,10 +316,17 @@ export default function RfmProject({ lang = "fr", theme = "light" }) {
           font-weight: 500;
           box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
+        .dark .project-link {
+          background: linear-gradient(135deg, #263445, #2ecc71);
+          color: #f7f9fa;
+        }
         .project-link:hover {
           transform: translateY(-3px);
           box-shadow: 0 5px 15px rgba(0,0,0,0.2);
           background: linear-gradient(135deg, #2980b9, #27ae60);
+        }
+        .dark .project-link:hover {
+          background: linear-gradient(135deg, #1a252f, #27ae60);
         }
         .screenshots-section {
           margin-top: 4rem;
@@ -363,49 +417,158 @@ export default function RfmProject({ lang = "fr", theme = "light" }) {
         .dark .tag {
           background: #2a80b9;
         }
+
         /* Lightbox styles */
         .lightbox {
           position: fixed;
           top: 0;
           left: 0;
-          background: rgba(0,0,0,0.9);
           width: 100%;
           height: 100%;
+          background: rgba(0, 0, 0, 0.95);
           display: flex;
-          align-items: center;
           justify-content: center;
+          align-items: center;
           z-index: 1000;
+          padding: 2rem;
+          box-sizing: border-box;
         }
         .lightbox-content {
           position: relative;
-          max-width: 90vw;
-          max-height: 90vh;
-          overflow: auto;
-          background: transparent;
+          max-width: 90%;
+          max-height: 90%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
         }
         .lightbox-image {
           max-width: 100%;
           max-height: 80vh;
-          border-radius: 10px;
-          box-shadow: 0 0 25px rgba(0,0,0,0.8);
+          object-fit: contain;
+          border-radius: 8px;
+          box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
         }
         .lightbox-caption {
-          margin-top: 0.5rem;
+          color: white;
+          margin-top: 1rem;
+          font-size: 1.2rem;
           text-align: center;
-          color: #f7f9fa;
-          font-size: 1rem;
+          max-width: 800px;
+          padding: 0.5rem 1rem;
+          background: rgba(0, 0, 0, 0.7);
+          border-radius: 4px;
         }
         .close-button {
           position: absolute;
-          top: -40px;
-          right: 0;
-          color: white;
-          font-size: 2rem;
-          background: none;
+          top: -50px;
+          right: -10px;
+          background: rgba(0, 0, 0, 0.5);
           border: none;
+          color: white;
+          font-size: 1.5rem;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
           cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.3s ease;
+          opacity: 0.8;
         }
-      `}</style>
+        .close-button:hover {
+          opacity: 1;
+          background: rgba(255, 0, 0, 0.7);
+          transform: scale(1.1);
+        }
+        .nav-button {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          background: rgba(255, 255, 255, 0.1);
+          border: none;
+          color: white;
+          font-size: 1.8rem;
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.3s ease;
+          backdrop-filter: blur(10px);
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+          opacity: 0.9;
+          z-index: 10;
+        }
+        .nav-button:hover {
+          background: rgba(52, 152, 219, 0.6);
+          transform: translateY(-50%) scale(1.1);
+          opacity: 1;
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+        .nav-button.prev {
+          left: 30px;
+        }
+        .nav-button.next {
+          right: 30px;
+        }
+        .nav-button:focus {
+          outline: 2px solid rgba(52, 152, 219, 0.8);
+          outline-offset: 2px;
+        }
+
+        @media (max-width: 768px) {
+          .project-detail-container {
+            padding: 1.5rem;
+          }
+          .project-header h1 {
+            font-size: 2rem;
+          }
+          .screenshots-grid {
+            grid-template-columns: 1fr;
+          }
+          .nav-button {
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+          }
+          .nav-button.prev {
+            left: 15px;
+          }
+          .nav-button.next {
+            right: 15px;
+          }
+          .lightbox-content {
+            max-width: 95%;
+          }
+          .lightbox-caption {
+            font-size: 1rem;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .project-links {
+            flex-direction: column;
+            gap: 1rem;
+          }
+          .project-link {
+            justify-content: center;
+          }
+          .nav-button {
+            width: 40px;
+            height: 40px;
+            font-size: 1.2rem;
+          }
+          .nav-button.prev {
+            left: 10px;
+          }
+          .nav-button.next {
+            right: 10px;
+          }
+      }
+     `}</style>
     </div>
   );
 }

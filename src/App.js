@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import Home from "./Home";
 import ProjectDetail from "./ProjectDetail";
 import ProjectDetails1 from "./projectDetails1";
@@ -7,6 +7,16 @@ import BIVermeg from './bi_project';
 import RfmProject from './RfmProject';
 import BigData from './bigdata';
 import MovieRecommender from './MovieRecommender';
+import Dash from './dash';
+import SmartJobMatcher from './smart_job_matcher';
+function ScrollToTop() {
+  const location = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
+  return null;
+}
+
 function App() {
   const [lang, setLang] = useState("fr");
   const [theme, setTheme] = useState("light");
@@ -16,6 +26,7 @@ function App() {
 
   return (
     <Router>
+      <ScrollToTop />
       <div className={theme}>
         {/* Theme Toggle Button */}
         <button
@@ -73,6 +84,8 @@ function App() {
           <Route path="/rfmProject" element={<RfmProject lang={lang} theme={theme} />} />
           <Route path="/bigdata" element={<BigData lang={lang} theme={theme} />} />
           <Route path="/movie-recommender" element={<MovieRecommender lang={lang} theme={theme} />} />
+          <Route path="/dash" element={<Dash lang={lang} theme={theme} />} />
+          <Route path="/smart-job-matcher" element={<SmartJobMatcher lang={lang} theme={theme} />} />
         </Routes>
 
         {/* Global theme styles */}

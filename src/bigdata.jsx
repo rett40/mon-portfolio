@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { 
-  FaArrowLeft, 
-  FaGithub, 
-  FaImages, 
-  FaProjectDiagram, 
-  FaChartLine, 
-  FaTools
+import {
+  FaArrowLeft,
+  FaArrowRight,
+  FaGithub,
+  FaImages,
+  FaProjectDiagram,
+  FaChartLine,
+  FaTools,
+  FaTimes
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
@@ -58,103 +60,67 @@ const project = {
   },
   github: "https://github.com/tonrepo/bigdata-water-consumption",
   screenshots: [
-    { 
-      url: img1, 
-      alt: { 
-        fr: "Top 5 pays par consommation totale d'eau", 
-        en: "Top 5 countries by total water consumption" 
-      },
-      category: {
-        fr: "Analyse par pays",
-        en: "Country analysis"
+    {
+      url: img1,
+      alt: {
+        fr: "Top 5 pays par consommation totale d'eau",
+        en: "Top 5 countries by total water consumption"
       }
     },
-    { 
-      url: img2, 
-      alt: { 
-        fr: "Graphique du top 5 des pays consommateurs", 
-        en: "Top 5 consuming countries chart" 
-      },
-      category: {
-        fr: "Analyse par pays",
-        en: "Country analysis"
+    {
+      url: img2,
+      alt: {
+        fr: "Graphique du top 5 des pays consommateurs",
+        en: "Top 5 consuming countries chart"
       }
     },
-    { 
-      url: img3, 
-      alt: { 
-        fr: "Consommation moyenne par habitant", 
-        en: "Average consumption per capita" 
-      },
-      category: {
-        fr: "Analyse par habitant",
-        en: "Per capita analysis"
+    {
+      url: img3,
+      alt: {
+        fr: "Consommation moyenne par habitant",
+        en: "Average consumption per capita"
       }
     },
-    { 
-      url: img4, 
-      alt: { 
-        fr: "Graphique de consommation moyenne par habitant", 
-        en: "Average consumption per capita chart" 
-      },
-      category: {
-        fr: "Analyse par habitant",
-        en: "Per capita analysis"
+    {
+      url: img4,
+      alt: {
+        fr: "Graphique de consommation moyenne par habitant",
+        en: "Average consumption per capita chart"
       }
     },
-    { 
-      url: img5, 
-      alt: { 
-        fr: "Évolution annuelle de la consommation", 
-        en: "Annual consumption evolution" 
-      },
-      category: {
-        fr: "Analyse temporelle",
-        en: "Temporal analysis"
+    {
+      url: img5,
+      alt: {
+        fr: "Évolution annuelle de la consommation",
+        en: "Annual consumption evolution"
       }
     },
-    { 
-      url: img6, 
-      alt: { 
-        fr: "Graphique d'évolution max/min annuelle", 
-        en: "Annual max/min evolution chart" 
-      },
-      category: {
-        fr: "Analyse temporelle",
-        en: "Temporal analysis"
+    {
+      url: img6,
+      alt: {
+        fr: "Graphique d'évolution max/min annuelle",
+        en: "Annual max/min evolution chart"
       }
     },
-    { 
-      url: img7, 
-      alt: { 
-        fr: "Répartition globale par secteur", 
-        en: "Global distribution by sector" 
-      },
-      category: {
-        fr: "Analyse par secteur",
-        en: "Sector analysis"
+    {
+      url: img7,
+      alt: {
+        fr: "Répartition globale par secteur",
+        en: "Global distribution by sector"
       }
     },
-    { 
-      url: img8, 
-      alt: { 
-        fr: "Consommation par pays et secteur", 
-        en: "Consumption by country and sector" 
-      },
-      category: {
-        fr: "Analyse combinée",
-        en: "Combined analysis"
+    {
+      url: img8,
+      alt: {
+        fr: "Consommation par pays et secteur",
+        en: "Consumption by country and sector"
       }
     },
-    { 
-      url: img9, 
-      alt: { 
-        fr: "Graphique consommation par pays et secteur", 
-        en: "Consumption by country and sector chart" 
-      },
-      category: {
-        fr: "Analyse combinée",
-        en: "Combined analysis"
+    {
+      url: img9,
+      alt: {
+        fr: "Graphique consommation par pays et secteur",
+        en: "Consumption by country and sector chart"
       }
     }
   ],
@@ -180,18 +146,6 @@ const project = {
     fr: "Ce projet a permis d'identifier les principaux pays consommateurs, les tendances annuelles et la répartition sectorielle, fournissant une vue complète de l'usage mondial de l'eau. Les visualisations aident à comprendre les disparités entre pays et secteurs économiques.",
     en: "This project identified the main consuming countries, annual trends and sector distribution, providing a comprehensive view of global water usage. The visualizations help understand disparities between countries and economic sectors."
   },
-  keyMetrics: {
-    fr: [
-      { value: "Top 5 pays", description: "Identification des plus grands consommateurs" },
-      { value: "30%", description: "Réduction potentielle des gaspillages" },
-      { value: "5 secteurs", description: "Analyse par secteur économique" }
-    ],
-    en: [
-      { value: "Top 5 countries", description: "Identification of largest consumers" },
-      { value: "30%", description: "Potential waste reduction" },
-      { value: "5 sectors", description: "Analysis by economic sector" }
-    ]
-  },
   tags: {
     fr: ["Big Data", "PySpark", "Data Visualization", "Streamlit", "Python", "Matplotlib", "Seaborn", "Data Analysis"],
     en: ["Big Data", "PySpark", "Data Visualization", "Streamlit", "Python", "Matplotlib", "Seaborn", "Data Analysis"]
@@ -200,368 +154,415 @@ const project = {
 
 const ui = {
   back: { fr: "Retour aux projets", en: "Back to projects" },
-  code: { fr: "Code source", en: "Source code" },
-  gallery: { fr: "Visualisations", en: "Visualizations" },
-  process: { fr: "Méthodologie", en: "Methodology" },
-  impact: { fr: "Résultats", en: "Results" },
-  tags: { fr: "Technologies", en: "Technologies" },
-  keyMetrics: { fr: "Indicateurs clés", en: "Key Metrics" }
+  gallery: { fr: "Galerie du projet", en: "Project Gallery" },
+  process: { fr: "Processus du projet", en: "Project Process" },
+  impact: { fr: "Impact", en: "Impact" },
+  tags: { fr: "Tags", en: "Tags" }
 };
 
 export default function BigDataProject({ lang = "fr", theme = "light" }) {
   const navigate = useNavigate();
   const [selectedImage, setSelectedImage] = useState(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  // Description détaillée du fichier CSV
-  const fileDescription = {
-    fr: (
-      <>
-        <h2>Description du fichier de données</h2>
-        <p>
-          Le fichier <code>cleaned_global_water_consumption.csv</code> contient des données structurées sur la consommation d'eau à l'échelle mondiale. 
-          Il regroupe les informations suivantes :
-        </p>
-        <ul>
-          <li><strong>Pays :</strong> Le nom du pays concerné.</li>
-          <li><strong>Année :</strong> L'année d'observation des données.</li>
-          <li><strong>Consommation totale :</strong> Volume total d'eau consommée (en millions de m³).</li>
-          <li><strong>Consommation par secteur :</strong> Répartition de la consommation entre agriculture, industrie, usage domestique, etc.</li>
-          <li><strong>Consommation par habitant :</strong> Estimation moyenne par personne.</li>
-          <li><strong>Autres indicateurs :</strong> Données complémentaires pour analyse temporelle et sectorielle.</li>
-        </ul>
-        <p>
-          Ce jeu de données a été préalablement nettoyé pour supprimer les anomalies, valeurs manquantes et incohérences, 
-          assurant ainsi une qualité optimale pour l'analyse Big Data et les visualisations.
-        </p>
-      </>
-    ),
-    en: (
-      <>
-        <h2>Dataset Description</h2>
-        <p>
-          The <code>cleaned_global_water_consumption.csv</code> file contains structured data on global water consumption.
-          It includes the following information:
-        </p>
-        <ul>
-          <li><strong>Country:</strong> Name of the country.</li>
-          <li><strong>Year:</strong> Year of data observation.</li>
-          <li><strong>Total consumption:</strong> Total water consumption volume (in million m³).</li>
-          <li><strong>Consumption by sector:</strong> Breakdown of consumption between agriculture, industry, domestic use, etc.</li>
-          <li><strong>Per capita consumption:</strong> Estimated average per person.</li>
-          <li><strong>Other indicators:</strong> Additional data for temporal and sectorial analysis.</li>
-        </ul>
-        <p>
-          This dataset was pre-cleaned to remove anomalies, missing values, and inconsistencies,
-          ensuring optimal quality for Big Data analysis and visualizations.
-        </p>
-      </>
-    )
+  const openImage = (img, index) => {
+    setSelectedImage(img);
+    setCurrentImageIndex(index);
   };
 
-  // Grouper les screenshots par catégorie
-  const groupedScreenshots = project.screenshots.reduce((acc, screenshot) => {
-    const categoryKey = screenshot.category[lang];
-    if (!acc[categoryKey]) {
-      acc[categoryKey] = [];
+  const navigateImage = (direction) => {
+    let newIndex;
+    if (direction === 'prev') {
+      newIndex = currentImageIndex === 0 ? project.screenshots.length - 1 : currentImageIndex - 1;
+    } else {
+      newIndex = currentImageIndex === project.screenshots.length - 1 ? 0 : currentImageIndex + 1;
     }
-    acc[categoryKey].push(screenshot);
-    return acc;
-  }, {});
+    setSelectedImage(project.screenshots[newIndex]);
+    setCurrentImageIndex(newIndex);
+  };
 
   return (
     <div className={`project-detail-container ${theme}`}>
       <button className="back-button" onClick={() => navigate(-1)}>
         <FaArrowLeft /> {ui.back[lang]}
       </button>
-      
       <header className="project-header">
         <h1>{project.title[lang]}</h1>
       </header>
-
-      <section className="project-description">
-        {project.description[lang]}
-      </section>
-
-      <div className="project-links">
-        <a href={project.github} target="_blank" rel="noopener noreferrer" className="project-link">
-          <FaGithub /> {ui.code[lang]}
-        </a>
-      </div>
-
-      {/* Section Indicateurs clés */}
-      <section className="metrics-section">
-        <h2>
-          <FaChartLine className="mr-2" />
-          {ui.keyMetrics[lang]}
-        </h2>
-        <div className="metrics-grid">
-          {project.keyMetrics[lang].map((metric, i) => (
-            <div key={i} className="metric-card">
-              <div className="metric-value">{metric.value}</div>
-              <div className="metric-description">{metric.description}</div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Galerie organisée par catégories */}
-      <section className="screenshots-section">
-        <h2>
-          <FaImages className="mr-2" />
-          {ui.gallery[lang]}
-        </h2>
-        
-        {Object.entries(groupedScreenshots).map(([category, screenshots]) => (
-          <div key={category} className="screenshot-category">
-            <h3 className="category-title">{category}</h3>
-            <div className="screenshots-grid">
-              {screenshots.map((img, i) => (
-                <div key={i} className="screenshot-item" onClick={() => setSelectedImage(img)}>
-                  <img src={img.url} alt={img.alt[lang]} className="screenshot-image" />
-                  <p className="screenshot-caption">{img.alt[lang]}</p>
-                </div>
-              ))}
-            </div>
+      <section className="project-content">
+        <div className="project-description">{project.description[lang]}</div>
+        <section className="screenshots-section">
+          <h2>
+            <FaImages className="mr-2" />
+            {ui.gallery[lang]}
+          </h2>
+          <div className="screenshots-grid">
+            {project.screenshots.map((img, i) => (
+              <div
+                key={i}
+                className="screenshot-item"
+                onClick={() => openImage(img, i)}
+              >
+                <img
+                  src={img.url}
+                  alt={img.alt[lang]}
+                  className="screenshot-image"
+                />
+                <p className="screenshot-caption">{img.alt[lang]}</p>
+              </div>
+            ))}
           </div>
-        ))}
+        </section>
+        <section className="screenshots-section">
+          <h2>
+            <FaProjectDiagram className="mr-2" />
+            {ui.process[lang]}
+          </h2>
+          <ul>
+            {project.process[lang].map((step, idx) => (
+              <li key={idx}>{step}</li>
+            ))}
+          </ul>
+        </section>
+        <section className="screenshots-section">
+          <h2>
+            <FaChartLine className="mr-2" />
+            {ui.impact[lang]}
+          </h2>
+          <div className="impact-block">
+            <p>{project.impact[lang]}</p>
+          </div>
+        </section>
+        <section className="screenshots-section">
+          <h2>
+            <FaTools className="mr-2" />
+            {ui.tags[lang]}
+          </h2>
+          <div className="tags-block">
+            {project.tags[lang].map((tag, idx) => (
+              <span key={idx} className="tag">{tag}</span>
+            ))}
+          </div>
+        </section>
       </section>
-
-      {/* Nouvelle section description détaillée du fichier */}
-      <section className="file-description-section" style={{margin: "4rem 0"}}>
-        {fileDescription[lang]}
-      </section>
-
-      {/* Processus */}
-      <section className="process-section">
-        <h2>
-          <FaProjectDiagram className="mr-2" />
-          {ui.process[lang]}
-        </h2>
-        <ul className="process-steps">
-          {project.process[lang].map((step, idx) => (
-            <li key={idx}>{step}</li>
-          ))}
-        </ul>
-      </section>
-
-      {/* Impact */}
-      <section className="impact-section">
-        <h2>
-          <FaChartLine className="mr-2" />
-          {ui.impact[lang]}
-        </h2>
-        <div className="impact-block">
-          <p>{project.impact[lang]}</p>
-        </div>
-      </section>
-
-      {/* Tags */}
-      <section className="tags-section">
-        <h2>
-          <FaTools className="mr-2" />
-          {ui.tags[lang]}
-        </h2>
-        <div className="tags-block">
-          {project.tags[lang].map((tag, idx) => (
-            <span key={idx} className="tag">{tag}</span>
-          ))}
-        </div>
-      </section>
-
-      {/* Lightbox pour agrandir images */}
       {selectedImage && (
         <div className="lightbox" onClick={() => setSelectedImage(null)}>
-          <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
-            <button className="close-button" onClick={() => setSelectedImage(null)}>
-              <FaArrowLeft />
+          <button 
+            className="nav-button prev-button" 
+            onClick={(e) => {
+              e.stopPropagation();
+              navigateImage('prev');
+            }}
+          >
+            <FaArrowLeft />
+          </button>
+          <div className="lightbox-content" onClick={e => e.stopPropagation()}>
+            <button 
+              className="close-button" 
+              onClick={(e) => {
+                e.stopPropagation();
+                setSelectedImage(null);
+              }}
+            >
+              <FaTimes />
             </button>
-            <img src={selectedImage.url} alt={selectedImage.alt[lang]} className="lightbox-image" />
-            <div className="lightbox-info">
-              <h3>{selectedImage.alt[lang]}</h3>
-              <p>{selectedImage.category[lang]}</p>
-            </div>
+            <img
+              src={selectedImage.url}
+              alt={selectedImage.alt[lang]}
+              className="lightbox-image"
+            />
+            <p className="lightbox-caption">{selectedImage.alt[lang]}</p>
           </div>
+          <button 
+            className="nav-button next-button" 
+            onClick={(e) => {
+              e.stopPropagation();
+              navigateImage('next');
+            }}
+          >
+            <FaArrowRight />
+          </button>
         </div>
       )}
-
-      {/* Styles en JSX */}
       <style jsx>{`
         .project-detail-container {
-          max-width: 900px;
-          margin: auto;
-          padding: 1rem 2rem;
-          font-family: Arial, sans-serif;
-          color: ${theme === "dark" ? "#eee" : "#222"};
-          background: ${theme === "dark" ? "#222" : "#fff"};
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 2rem;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          color: #333;
+          background: #f7f9fa;
+          transition: background 0.3s, color 0.3s;
+        }
+        .dark.project-detail-container {
+          background: #181c22;
+          color: #f7f9fa;
         }
         .back-button {
-          background: none;
-          border: none;
-          color: ${theme === "dark" ? "#aaa" : "#0077cc"};
-          cursor: pointer;
-          font-size: 1rem;
-          margin-bottom: 1rem;
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-        }
-        .project-header h1 {
-          font-size: 2rem;
-          margin-bottom: 1rem;
-          color: ${theme === "dark" ? "#fff" : "#111"};
-        }
-        .project-description p,
-        .project-description ul,
-        .project-description li {
-          font-size: 1rem;
-          line-height: 1.5;
-        }
-        .project-links {
-          margin-bottom: 2rem;
-        }
-        .project-link {
-          color: ${theme === "dark" ? "#66ccff" : "#0077cc"};
-          text-decoration: none;
-          font-weight: bold;
           display: inline-flex;
           align-items: center;
           gap: 0.5rem;
+          background: #2c3e50;
+          color: white;
+          border: none;
+          padding: 0.7rem 1.2rem;
+          border-radius: 6px;
+          cursor: pointer;
+          margin-bottom: 2rem;
+          transition: all 0.2s;
+          font-weight: 500;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        .metrics-section h2,
-        .screenshots-section h2,
-        .file-description-section h2,
-        .process-section h2,
-        .impact-section h2,
-        .tags-section h2 {
-          margin-top: 2rem;
-          margin-bottom: 1rem;
-          font-size: 1.5rem;
+        .back-button:hover {
+          background: #1a252f;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        .project-header h1 {
+          font-size: 2.5rem;
+          color: #2c3e50;
+          margin-bottom: 2rem;
+          font-weight: 700;
+          position: relative;
+          padding-bottom: 0.5rem;
+        }
+        .dark .project-header h1 {
+          color: #e0e6ed;
+        }
+        .project-description {
+          line-height: 1.7;
+          margin-bottom: 2rem;
+          font-size: 1.1rem;
+          color: #333;
+        }
+        .dark .project-description {
+          color: #e0e6ed;
+        }
+        .tech-tags {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.7rem;
+          margin-top: 0.7rem;
+          margin-bottom: 1.5rem;
+        }
+        .tech-tag {
+          padding: 0.35rem 1rem;
+          border-radius: 20px;
+          font-size: 0.98rem;
+          font-weight: 600;
+          background: #e0f7fa;
+          transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+          cursor: default;
+          user-select: none;
+        }
+        .tech-tag:hover {
+          background: #fff;
+          box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+        }
+        .dark .tech-tag {
+          background: #23272f;
+          color: #7fd8e7 !important;
+          border: 1px solid #263445;
+        }
+        .dark .tech-tag:hover {
+          background: #263445;
+        }
+        .screenshots-section {
+          margin-top: 4rem;
+        }
+        .screenshots-section h2 {
+          font-size: 2rem;
+          color: #2c3e50;
+          margin-bottom: 2rem;
+          font-weight: 600;
+          position: relative;
+          padding-bottom: 0.5rem;
           display: flex;
           align-items: center;
-          gap: 0.5rem;
-          color: ${theme === "dark" ? "#aaddff" : "#005599"};
+          gap: 0.7rem;
         }
-        .metrics-grid {
-          display: flex;
-          gap: 1rem;
-          flex-wrap: wrap;
-        }
-        .metric-card {
-          background: ${theme === "dark" ? "#333" : "#f0f0f0"};
-          border-radius: 6px;
-          padding: 1rem;
-          flex: 1 1 30%;
-          box-shadow: 0 0 5px rgba(0,0,0,0.1);
-        }
-        .metric-value {
-          font-size: 1.5rem;
-          font-weight: bold;
-          margin-bottom: 0.5rem;
-          color: ${theme === "dark" ? "#99ddff" : "#005599"};
-        }
-        .metric-description {
-          font-size: 1rem;
+        .dark .screenshots-section h2 {
+          color: #e0e6ed;
         }
         .screenshots-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-          gap: 1rem;
+          grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+          gap: 2rem;
         }
         .screenshot-item {
-          cursor: pointer;
-          border-radius: 6px;
+          background: white;
+          border-radius: 10px;
           overflow: hidden;
-          box-shadow: 0 0 8px rgba(0,0,0,0.1);
-          background: ${theme === "dark" ? "#2b2b2b" : "#fff"};
-          transition: transform 0.2s ease;
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+          transition: all 0.3s ease;
+          cursor: pointer;
+          display: flex;
+          flex-direction: column;
+        }
+        .dark .screenshot-item {
+          background: #23272f;
+          color: #f7f9fa;
         }
         .screenshot-item:hover {
-          transform: scale(1.05);
+          transform: translateY(-5px);
+          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
         }
         .screenshot-image {
           width: 100%;
-          display: block;
-          object-fit: contain;
+          height: auto;
+          object-fit: cover;
+          border-radius: 10px 10px 0 0;
         }
         .screenshot-caption {
-          padding: 0.5rem;
-          font-size: 0.9rem;
-          color: ${theme === "dark" ? "#ccc" : "#333"};
+          padding: 1.2rem;
+          margin: 0;
+          font-size: 0.95rem;
+          color: #555;
           text-align: center;
+          background: #f9f9f9;
         }
-        .file-description-section {
-          background: ${theme === "dark" ? "#333" : "#fafafa"};
-          border-radius: 8px;
-          padding: 1.5rem;
-          box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .file-description-section ul {
-          margin-left: 1.2rem;
-        }
-        .process-steps {
-          list-style-type: decimal;
-          padding-left: 1.5rem;
+        .dark .screenshot-caption {
+          background: #23272f;
+          color: #e0e6ed;
         }
         .impact-block {
-          font-style: italic;
+          background: #e0f7fa;
+          color: #00838f;
+          padding: 1.2rem 2rem;
+          border-radius: 12px;
           font-size: 1.1rem;
-          margin: 1rem 0;
+          font-weight: 500;
+          margin-bottom: 2rem;
         }
         .tags-block {
           display: flex;
-          gap: 0.5rem;
           flex-wrap: wrap;
+          gap: 0.7rem;
         }
         .tag {
-          background: ${theme === "dark" ? "#005577" : "#ccf0ff"};
-          color: ${theme === "dark" ? "#cceeff" : "#005577"};
-          padding: 0.3rem 0.7rem;
-          border-radius: 12px;
+          background: #e0f7fa;
+          color: #00838f;
+          padding: 0.4rem 1rem;
+          border-radius: 20px;
           font-size: 0.9rem;
           font-weight: 600;
-          user-select: none;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
-        /* Lightbox styles */
+        .dark .tag {
+          background: #263445;
+          color: #7fd8e7;
+        }
         .lightbox {
           position: fixed;
-          top:0; left:0; right:0; bottom:0;
-          background: rgba(0,0,0,0.85);
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.9);
           display: flex;
-          align-items: center;
           justify-content: center;
+          align-items: center;
           z-index: 1000;
+          padding: 2rem;
+          box-sizing: border-box;
         }
         .lightbox-content {
           position: relative;
-          max-width: 90vw;
-          max-height: 90vh;
-          text-align: center;
+          max-width: 90%;
+          max-height: 90%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
         }
         .lightbox-image {
           max-width: 100%;
           max-height: 80vh;
+          object-fit: contain;
           border-radius: 8px;
-          box-shadow: 0 0 20px rgba(255,255,255,0.3);
+          box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
         }
-        .lightbox-info {
-          margin-top: 0.5rem;
-          color: #eee;
+        .lightbox-caption {
+          color: white;
+          margin-top: 1rem;
+          font-size: 1.2rem;
+          text-align: center;
+          max-width: 800px;
         }
         .close-button {
           position: absolute;
           top: -40px;
           right: 0;
-          background: none;
+          background: transparent;
           border: none;
-          color: #fff;
+          color: white;
           font-size: 1.8rem;
           cursor: pointer;
-          transition: color 0.2s ease;
+          transition: transform 0.2s;
+          opacity: 0.8;
         }
         .close-button:hover {
-          color: #66ccff;
+          opacity: 1;
+          transform: scale(1.1);
+        }
+        .nav-button {
+          position: fixed;
+          top: 50%;
+          transform: translateY(-50%);
+          background: rgba(255, 255, 255, 0.2);
+          border: none;
+          color: white;
+          font-size: 2rem;
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: all 0.3s;
+          opacity: 0.7;
+        }
+        .nav-button:hover {
+          opacity: 1;
+          background: rgba(255, 255, 255, 0.3);
+          transform: translateY(-50%) scale(1.1);
+        }
+        .prev-button {
+          left: 30px;
+        }
+        .next-button {
+          right: 30px;
+        }
+        @media (max-width: 768px) {
+          .project-detail-container {
+            padding: 1.5rem;
+          }
+          .project-header h1 {
+            font-size: 2rem;
+          }
+          .screenshots-grid {
+            grid-template-columns: 1fr;
+          }
+          .lightbox-content {
+            max-width: 95%;
+          }
+          .lightbox-caption {
+            font-size: 1rem;
+          }
+          .nav-button {
+            width: 40px;
+            height: 40px;
+            font-size: 1.5rem;
+          }
+          .prev-button {
+            left: 10px;
+          }
+          .next-button {
+            right: 10px;
+          }
         }
       `}</style>
-    </div>
+      </div>
   );
 }

@@ -1,11 +1,20 @@
 import React, { useState } from "react";
-import { FaArrowLeft, FaGithub, FaImages, FaProjectDiagram, FaChartLine, FaTools } from "react-icons/fa";
-import { useNavigate, useParams } from "react-router-dom";
+import { 
+  FaArrowLeft, 
+  FaGithub, 
+  FaImages, 
+  FaProjectDiagram, 
+  FaChartLine, 
+  FaTools,
+  FaTimes,
+  FaChevronLeft,
+  FaChevronRight
+} from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import img1 from "./screenshots/movie1.PNG";
 import img2 from "./screenshots/movie2.PNG";
 import img3 from "./screenshots/movie3.PNG";
 
-// Données du projet
 const project = {
   id: "movie-recommender",
   title: {
@@ -50,7 +59,7 @@ const project = {
       { name: "Streamlit", color: "#FF4B4B", icon: "🚀" },
       { name: "SVD Algorithm", color: "#8E44AD", icon: "🔍" },
       { name: "TMDB API", color: "#01D277", icon: "🎥" },
-      { name: "Pandas/Numpy", color: "#150458", icon: "📊" },
+      { name: "Pandas/Numpy", color: "#5b3cd5ff", icon: "📊" },
       { name: "Collaborative Filtering", color: "#E67E22", icon: "👥" }
     ],
     en: [
@@ -62,7 +71,7 @@ const project = {
       { name: "Collaborative Filtering", color: "#E67E22", icon: "👥" }
     ]
   },
-  github: "https://github.com/yourusername/movie-recommender",
+  github: "https://github.com/rett40/movie_recommender",
   screenshots: [
     { url: img1, alt: { fr: "Mode Utilisateur Unique", en: "Single User Mode" } },
     { url: img2, alt: { fr: "Filtres Mode Couple", en: "Couple Mode Filters" } },
@@ -142,12 +151,43 @@ const ui = {
 export default function MovieRecommender({ lang = "fr", theme = "light" }) {
   const navigate = useNavigate();
   const [selectedImage, setSelectedImage] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const currentLang = ['fr', 'en'].includes(lang) ? lang : 'fr';
   const screenshots = project.screenshots || [];
   const processSteps = project.process?.[currentLang] || [];
   const tags = project.tags?.[currentLang] || [];
   const technologies = project.technologies?.[currentLang] || [];
+
+  const openImage = (img) => {
+    const index = screenshots.findIndex(s => s.url === img.url);
+    setSelectedImage(img);
+    setCurrentIndex(index);
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeImage = () => {
+    setSelectedImage(null);
+    document.body.style.overflow = 'auto';
+  };
+
+  const showPrev = (e) => {
+    e.stopPropagation();
+    if (currentIndex > 0) {
+      const newIndex = currentIndex - 1;
+      setSelectedImage(screenshots[newIndex]);
+      setCurrentIndex(newIndex);
+    }
+  };
+
+  const showNext = (e) => {
+    e.stopPropagation();
+    if (currentIndex < screenshots.length - 1) {
+      const newIndex = currentIndex + 1;
+      setSelectedImage(screenshots[newIndex]);
+      setCurrentIndex(newIndex);
+    }
+  };
 
   return (
     <div className={`project-detail-container ${theme}`}>
@@ -198,7 +238,7 @@ export default function MovieRecommender({ lang = "fr", theme = "light" }) {
               <div
                 key={`screenshot-${i}`}
                 className="screenshot-item"
-                onClick={() => setSelectedImage(img)}
+                onClick={() => openImage(img)}
               >
                 <img
                   src={img.url}
@@ -247,14 +287,22 @@ export default function MovieRecommender({ lang = "fr", theme = "light" }) {
         </section>
       </section>
       {selectedImage && (
-        <div className="lightbox" onClick={() => setSelectedImage(null)}>
+        <div className="lightbox" onClick={closeImage}>
+          <button
+            className="nav-button prev"
+            onClick={showPrev}
+            aria-label="Previous image"
+            style={{ display: currentIndex > 0 ? "flex" : "none" }}
+          >
+            <FaChevronLeft />
+          </button>
           <div className="lightbox-content" onClick={e => e.stopPropagation()}>
             <button 
               className="close-button" 
-              onClick={() => setSelectedImage(null)}
+              onClick={closeImage}
               aria-label="Close"
             >
-              &times;
+              <FaTimes />
             </button>
             <img
               src={selectedImage.url}
@@ -263,6 +311,14 @@ export default function MovieRecommender({ lang = "fr", theme = "light" }) {
             />
             <p className="lightbox-caption">{selectedImage.alt[currentLang]}</p>
           </div>
+          <button
+            className="nav-button next"
+            onClick={showNext}
+            aria-label="Next image"
+            style={{ display: currentIndex < screenshots.length - 1 ? "flex" : "none" }}
+          >
+            <FaChevronRight />
+          </button>
         </div>
       )}
       <style jsx>{`
@@ -367,10 +423,17 @@ export default function MovieRecommender({ lang = "fr", theme = "light" }) {
           font-weight: 500;
           box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
+        .dark .project-link {
+          background: linear-gradient(135deg, #263445, #2ecc71);
+          color: #f7f9fa;
+        }
         .project-link:hover {
           transform: translateY(-3px);
           box-shadow: 0 5px 15px rgba(0,0,0,0.2);
           background: linear-gradient(135deg, #2980b9, #27ae60);
+        }
+        .dark .project-link:hover {
+          background: linear-gradient(135deg, #1a252f, #27ae60);
         }
         .project-section {
           margin-top: 4rem;
@@ -479,13 +542,15 @@ export default function MovieRecommender({ lang = "fr", theme = "light" }) {
           background: #263445;
           color: #7fd8e7;
         }
+
+        /* Lightbox styles */
         .lightbox {
           position: fixed;
           top: 0;
           left: 0;
           width: 100%;
           height: 100%;
-          background: rgba(0, 0, 0, 0.9);
+          background: rgba(0, 0, 0, 0.95);
           display: flex;
           justify-content: center;
           align-items: center;
@@ -506,7 +571,7 @@ export default function MovieRecommender({ lang = "fr", theme = "light" }) {
           max-height: 80vh;
           object-fit: contain;
           border-radius: 8px;
-          box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+          box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
         }
         .lightbox-caption {
           color: white;
@@ -514,19 +579,71 @@ export default function MovieRecommender({ lang = "fr", theme = "light" }) {
           font-size: 1.2rem;
           text-align: center;
           max-width: 800px;
+          padding: 0.5rem 1rem;
+          background: rgba(0, 0, 0, 0.7);
+          border-radius: 4px;
         }
         .close-button {
           position: absolute;
           top: -50px;
-          right: 0;
-          background: none;
+          right: -10px;
+          background: rgba(0, 0, 0, 0.5);
           border: none;
           color: white;
-          font-size: 2.5rem;
+          font-size: 1.5rem;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
           cursor: pointer;
-          padding: 0;
-          line-height: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.3s ease;
+          opacity: 0.8;
         }
+        .close-button:hover {
+          opacity: 1;
+          background: rgba(255, 0, 0, 0.7);
+          transform: scale(1.1);
+        }
+        .nav-button {
+          position: fixed;
+          top: 50%;
+          transform: translateY(-50%);
+          background: rgba(255, 255, 255, 0.1);
+          border: none;
+          color: white;
+          font-size: 1.8rem;
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.3s ease;
+          backdrop-filter: blur(10px);
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+          opacity: 0.9;
+          z-index: 10;
+        }
+        .nav-button.prev {
+          left: 30px;
+        }
+        .nav-button.next {
+          right: 30px;
+        }
+        .nav-button:hover {
+          background: rgba(52, 152, 219, 0.6);
+          transform: translateY(-50%) scale(1.1);
+          opacity: 1;
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+        .nav-button:focus {
+          outline: 2px solid rgba(52, 152, 219, 0.8);
+          outline-offset: 2px;
+        }
+
         @media (max-width: 768px) {
           .project-detail-container {
             padding: 1.5rem;
@@ -537,6 +654,17 @@ export default function MovieRecommender({ lang = "fr", theme = "light" }) {
           .screenshots-grid {
             grid-template-columns: 1fr;
           }
+          .nav-button {
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+          }
+          .nav-button.prev {
+            left: 15px;
+          }
+          .nav-button.next {
+            right: 15px;
+          }
           .lightbox-content {
             max-width: 95%;
           }
@@ -544,6 +672,7 @@ export default function MovieRecommender({ lang = "fr", theme = "light" }) {
             font-size: 1rem;
           }
         }
+
         @media (max-width: 480px) {
           .project-header h1 {
             font-size: 1.8rem;
@@ -558,8 +687,18 @@ export default function MovieRecommender({ lang = "fr", theme = "light" }) {
             font-size: 0.85rem;
             padding: 0.3rem 0.8rem;
           }
-        }
-      `}</style>
+          .nav-button {
+            width: 40px;
+            height: 40px;
+            font-size: 1.2rem;
+          }
+          .nav-button.prev {
+            left: 10px;
+          }
+          .nav-button.next {
+            right: 10px;
+          }
+        `}</style>
     </div>
   );
 }

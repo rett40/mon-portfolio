@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { FaGithub, FaExternalLinkAlt, FaArrowLeft, FaTimes } from "react-icons/fa";
+import { FaGithub, FaExternalLinkAlt, FaArrowLeft, FaTimes, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
-// Import des images depuis src/screenshots
 import img2 from "./screenshots/2.PNG";
 import img3 from "./screenshots/3.PNG";
 import img4 from "./screenshots/4.PNG";
@@ -12,7 +11,6 @@ import img7 from "./screenshots/7.PNG";
 import img8 from "./screenshots/8.PNG";
 import img9 from "./screenshots/9.PNG";
 
-// Données du projet POS avec support multilingue
 const projects = [
   {
     id: "pos",
@@ -72,7 +70,7 @@ const projects = [
         </>
       )
     },
-    github: "https://github.com/tonrepo/pos-system",
+    github: "https://github.com/rett40/caisse",
     screenshots: [
       { url: img2, alt: { fr: "Gestion des utilisateurs", en: "User management" } },
       { url: img3, alt: { fr: "Gestion des produits et catégories", en: "Product and category management" } },
@@ -86,14 +84,14 @@ const projects = [
   }
 ];
 
-// Récupère la langue et le thème depuis les props, défaut "fr" et "light"
 export default function ProjectDetail({ lang = "fr", theme = "light" }) {
   const { id } = useParams();
   const navigate = useNavigate();
   const project = projects.find((p) => p.id === id);
-  const [selectedImage, setSelectedImage] = useState(null);
 
-  // Textes multilingues pour l'UI
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(null);
+
   const ui = {
     back: {
       fr: "Retour aux projets",
@@ -128,14 +126,34 @@ export default function ProjectDetail({ lang = "fr", theme = "light" }) {
     );
   }
 
-  const openImage = (image) => {
+  const openImage = (image, index) => {
     setSelectedImage(image);
-    document.body.style.overflow = 'hidden'; // Empêche le défilement de la page
+    setCurrentIndex(index);
+    document.body.style.overflow = 'hidden';
   };
 
   const closeImage = () => {
     setSelectedImage(null);
-    document.body.style.overflow = 'auto'; // Réactive le défilement
+    setCurrentIndex(null);
+    document.body.style.overflow = 'auto';
+  };
+
+  const showPrev = (e) => {
+    e.stopPropagation();
+    if (currentIndex > 0) {
+      const prevIndex = currentIndex - 1;
+      setSelectedImage(project.screenshots[prevIndex]);
+      setCurrentIndex(prevIndex);
+    }
+  };
+
+  const showNext = (e) => {
+    e.stopPropagation();
+    if (currentIndex < project.screenshots.length - 1) {
+      const nextIndex = currentIndex + 1;
+      setSelectedImage(project.screenshots[nextIndex]);
+      setCurrentIndex(nextIndex);
+    }
   };
 
   return (
@@ -180,7 +198,7 @@ export default function ProjectDetail({ lang = "fr", theme = "light" }) {
                 <div 
                   key={index} 
                   className="screenshot-item"
-                  onClick={() => openImage(screenshot)}
+                  onClick={() => openImage(screenshot, index)}
                 >
                   <img
                     src={screenshot.url}
@@ -198,9 +216,19 @@ export default function ProjectDetail({ lang = "fr", theme = "light" }) {
       {selectedImage && (
         <div className="lightbox" onClick={closeImage}>
           <div className="lightbox-content" onClick={e => e.stopPropagation()}>
-            <button className="close-button" onClick={closeImage}>
+            <button className="close-button" onClick={closeImage} aria-label="Close">
               <FaTimes />
             </button>
+            {currentIndex > 0 && (
+              <button className="nav-button prev-button" onClick={showPrev} aria-label="Previous image">
+                <FaChevronLeft />
+              </button>
+            )}
+            {currentIndex < project.screenshots.length - 1 && (
+              <button className="nav-button next-button" onClick={showNext} aria-label="Next image">
+                <FaChevronRight />
+              </button>
+            )}
             <img 
               src={selectedImage.url} 
               alt={selectedImage.alt[lang]} 
@@ -420,8 +448,8 @@ export default function ProjectDetail({ lang = "fr", theme = "light" }) {
         }
 
         .screenshot-image {
-          max-width: 100%;
-          max-height: 100%;
+          width: 100%;
+          height: 200px;
           object-fit: cover;
           border-bottom: 1px solid #eee;
           transition: transform 0.3s ease;
@@ -475,6 +503,7 @@ export default function ProjectDetail({ lang = "fr", theme = "light" }) {
           object-fit: contain;
           border-radius: 8px;
           box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+          transition: opacity 0.3s ease;
         }
 
         .lightbox-caption {
@@ -483,43 +512,112 @@ export default function ProjectDetail({ lang = "fr", theme = "light" }) {
           font-size: 1.2rem;
           text-align: center;
           max-width: 800px;
+          padding: 0.5rem 1rem;
+          background: rgba(0, 0, 0, 0.7);
+          border-radius: 4px;
         }
 
         .close-button {
           position: absolute;
-          top: -40px;
-          right: 0;
-          background: transparent;
+          top: -50px;
+          right: -10px;
+          background: rgba(0, 0, 0, 0.5);
           border: none;
           color: white;
-          font-size: 1.8rem;
+          font-size: 1.5rem;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
           cursor: pointer;
-          transition: transform 0.2s;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.3s ease;
+          opacity: 0.8;
         }
 
         .close-button:hover {
-          transform: rotate(90deg);
+          opacity: 1;
+          background: rgba(255, 0, 0, 0.7);
+          transform: scale(1.1);
         }
 
+        .nav-button {
+          position: fixed;
+          top: 50%;
+          transform: translateY(-50%);
+          background: rgba(255, 255, 255, 0.1);
+          border: none;
+          color: white;
+          font-size: 2rem;
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: all 0.3s;
+          backdrop-filter: blur(10px);
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+          opacity: 0.9;
+          z-index: 10;
+        }
+        .nav-button:hover {
+          background: rgba(52, 152, 219, 0.6);
+          transform: translateY(-50%) scale(1.1);
+          opacity: 1;
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+        .prev-button {
+          left: 30px;
+        }
+        .next-button {
+          right: 30px;
+        }
         @media (max-width: 768px) {
-          .project-detail-container {
-            padding: 1.5rem;
+          .nav-button {
+            width: 40px;
+            height: 40px;
+            font-size: 1.2rem;
           }
-          
-          .project-header h1 {
-            font-size: 2rem;
+          .prev-button {
+            left: 10px;
           }
-          
-          .screenshots-grid {
-            grid-template-columns: 1fr;
+          .next-button {
+            right: 10px;
           }
-          
+        }
+        /* Keyboard navigation focus styles */
+        .nav-button:focus,
+        .close-button:focus {
+          outline: 2px solid rgba(52, 152, 219, 0.8);
+          outline-offset: 2px;
+        }
+        @media (max-width: 768px) {
           .lightbox-content {
             max-width: 95%;
           }
-          
           .lightbox-caption {
             font-size: 1rem;
+          }
+          .project-detail-container {
+            padding: 1.5rem;
+          }
+          .project-header h1 {
+            font-size: 2rem;
+          }
+          .screenshots-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+        @media (max-width: 480px) {
+          .project-links {
+            flex-direction: column;
+            gap: 1rem;
+          }
+          .project-link {
+            justify-content: center;
           }
         }
       `}</style>

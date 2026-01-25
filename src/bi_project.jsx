@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaArrowLeft, FaGithub, FaImages, FaProjectDiagram, FaChartLine, FaTools } from "react-icons/fa";
+import { FaArrowLeft, FaGithub, FaImages, FaProjectDiagram, FaChartLine, FaTools, FaTimes, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 import imgModelisation from './screenshots/modelisation1.PNG';
@@ -176,6 +176,37 @@ const ui = {
 export default function BIVermeg({ lang, theme }) {
   const navigate = useNavigate();
   const [selectedImage, setSelectedImage] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const openImage = (img) => {
+    const index = project.screenshots.findIndex(s => s.url === img.url);
+    setSelectedImage(img);
+    setCurrentIndex(index);
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeImage = () => {
+    setSelectedImage(null);
+    document.body.style.overflow = 'auto';
+  };
+
+  const showPrev = (e) => {
+    e.stopPropagation();
+    if (currentIndex > 0) {
+      const newIndex = currentIndex - 1;
+      setSelectedImage(project.screenshots[newIndex]);
+      setCurrentIndex(newIndex);
+    }
+  };
+
+  const showNext = (e) => {
+    e.stopPropagation();
+    if (currentIndex < project.screenshots.length - 1) {
+      const newIndex = currentIndex + 1;
+      setSelectedImage(project.screenshots[newIndex]);
+      setCurrentIndex(newIndex);
+    }
+  };
 
   return (
     <div className={`project-detail-container ${theme}`}>
@@ -187,16 +218,6 @@ export default function BIVermeg({ lang, theme }) {
       </header>
       <section className="project-content">
         <div className="project-description">{project.description[lang]}</div>
-        <div className="project-links">
-          <a
-            href={project.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="project-link"
-          >
-            <FaGithub /> {ui.code[lang]}
-          </a>
-        </div>
         <section className="screenshots-section">
           <h2>
             <FaImages className="mr-2" />
@@ -207,7 +228,7 @@ export default function BIVermeg({ lang, theme }) {
               <div
                 key={i}
                 className="screenshot-item"
-                onClick={() => setSelectedImage(img)}
+                onClick={() => openImage(img)}
               >
                 <img
                   src={img.url}
@@ -252,10 +273,18 @@ export default function BIVermeg({ lang, theme }) {
         </section>
       </section>
       {selectedImage && (
-        <div className="lightbox" onClick={() => setSelectedImage(null)}>
+        <div className="lightbox" onClick={closeImage}>
+          <button
+            className="nav-button prev"
+            onClick={showPrev}
+            aria-label="Previous image"
+            style={{ display: currentIndex > 0 ? "flex" : "none" }}
+          >
+            <FaChevronLeft />
+          </button>
           <div className="lightbox-content" onClick={e => e.stopPropagation()}>
-            <button className="close-button" onClick={() => setSelectedImage(null)}>
-              <FaArrowLeft />
+            <button className="close-button" onClick={closeImage} aria-label="Close">
+              <FaTimes />
             </button>
             <img
               src={selectedImage.url}
@@ -264,33 +293,17 @@ export default function BIVermeg({ lang, theme }) {
             />
             <p className="lightbox-caption">{selectedImage.alt[lang]}</p>
           </div>
+          <button
+            className="nav-button next"
+            onClick={showNext}
+            aria-label="Next image"
+            style={{ display: currentIndex < project.screenshots.length - 1 ? "flex" : "none" }}
+          >
+            <FaChevronRight />
+          </button>
         </div>
       )}
       <style jsx>{`
-        .lang-switch, .theme-switch {
-          background: #e0f7fa;
-          border: none;
-          border-radius: 20px;
-          padding: 0.4rem 1rem;
-          font-size: 1rem;
-          font-weight: 600;
-          color: #00838f;
-          cursor: pointer;
-          display: inline-flex;
-          align-items: center;
-          gap: 0.5rem;
-          transition: background 0.2s, color 0.2s;
-        }
-        .dark .lang-switch, .dark .theme-switch {
-          background: #263445;
-          color: #7fd8e7;
-        }
-        .lang-switch:hover, .theme-switch:hover {
-          background: #b2ebf2;
-        }
-        .dark .lang-switch:hover, .dark .theme-switch:hover {
-          background: #23272f;
-        }
         .project-detail-container {
           max-width: 1200px;
           margin: 0 auto;
@@ -492,13 +505,15 @@ export default function BIVermeg({ lang, theme }) {
           background: #263445;
           color: #7fd8e7;
         }
+
+        /* Lightbox styles */
         .lightbox {
           position: fixed;
           top: 0;
           left: 0;
           width: 100%;
           height: 100%;
-          background: rgba(0, 0, 0, 0.9);
+          background: rgba(0, 0, 0, 0.95);
           display: flex;
           justify-content: center;
           align-items: center;
@@ -519,7 +534,8 @@ export default function BIVermeg({ lang, theme }) {
           max-height: 80vh;
           object-fit: contain;
           border-radius: 8px;
-          box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+          box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+          transition: opacity 0.3s ease;
         }
         .lightbox-caption {
           color: white;
@@ -527,21 +543,71 @@ export default function BIVermeg({ lang, theme }) {
           font-size: 1.2rem;
           text-align: center;
           max-width: 800px;
+          padding: 0.5rem 1rem;
+          background: rgba(0, 0, 0, 0.7);
+          border-radius: 4px;
         }
         .close-button {
           position: absolute;
-          top: -40px;
-          right: 0;
-          background: transparent;
+          top: -50px;
+          right: -10px;
+          background: rgba(0, 0, 0, 0.5);
+          border: none;
+          color: white;
+          font-size: 1.5rem;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.3s ease;
+          opacity: 0.8;
+        }
+        .close-button:hover {
+          opacity: 1;
+          background: rgba(255, 0, 0, 0.7);
+          transform: scale(1.1);
+        }
+        .nav-button {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          background: rgba(255, 255, 255, 0.1);
           border: none;
           color: white;
           font-size: 1.8rem;
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
           cursor: pointer;
-          transition: transform 0.2s;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.3s ease;
+          backdrop-filter: blur(10px);
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+          opacity: 0.9;
+          z-index: 10;
         }
-        .close-button:hover {
-          transform: rotate(90deg);
+        .nav-button:hover {
+          background: rgba(52, 152, 219, 0.6);
+          transform: translateY(-50%) scale(1.1);
+          opacity: 1;
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
         }
+        .nav-button.prev {
+          left: 30px;
+        }
+        .nav-button.next {
+          right: 30px;
+        }
+        .nav-button:focus {
+          outline: 2px solid rgba(52, 152, 219, 0.8);
+          outline-offset: 2px;
+        }
+
         @media (max-width: 768px) {
           .project-detail-container {
             padding: 1.5rem;
@@ -552,6 +618,17 @@ export default function BIVermeg({ lang, theme }) {
           .screenshots-grid {
             grid-template-columns: 1fr;
           }
+          .nav-button {
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+          }
+          .nav-button.prev {
+            left: 15px;
+          }
+          .nav-button.next {
+            right: 15px;
+          }
           .lightbox-content {
             max-width: 95%;
           }
@@ -559,7 +636,28 @@ export default function BIVermeg({ lang, theme }) {
             font-size: 1rem;
           }
         }
-      `}</style>
+
+        @media (max-width: 480px) {
+          .project-links {
+            flex-direction: column;
+            gap: 1rem;
+          }
+          .project-link {
+            justify-content: center;
+          }
+          .nav-button {
+            width: 40px;
+            height: 40px;
+            font-size: 1.2rem;
+          }
+          .nav-button.prev {
+            left: 10px;
+          }
+          .nav-button.next {
+            right: 10px;
+          }
+      }
+          `}</style>
     </div>
   );
 }

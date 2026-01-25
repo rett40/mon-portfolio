@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaGithub, FaArrowLeft, FaTimes } from "react-icons/fa";
+import { FaGithub, FaArrowLeft, FaTimes, FaArrowRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 import knnImg from "./screenshots/myplot.png";
@@ -32,63 +32,31 @@ const project = {
         </ul>
         <h3>Technologies</h3>
         <div className="tech-tags">
-  {[
-    { name: "Python", color: "#3776AB", icon: "🐍" },
-    { name: "Pandas", color: "#150458", icon: "🦄" },
-    { name: "scikit-learn", color: "#F7931E", icon: "📊" },
-    { name: "Flask", color: "#000", icon: "🌶️" },
-    { name: "Matplotlib", color: "#11557c", icon: "📈" },
-    { name: "Seaborn", color: "#43b7ba", icon: "🌊" }
-  ].map((tech, idx) => (
-    <span
-      key={tech.name}
-      className="tech-tag"
-      style={{
-        background: tech.color + "22",
-        color: tech.color,
-        border: `1px solid ${tech.color}`,
-        display: "inline-flex",
-        alignItems: "center",
-        gap: "0.4em"
-      }}
-    >
-      <span style={{ fontSize: "1.1em" }}>{tech.icon}</span>
-      {tech.name}
-    </span>
-  ))}
-  <style jsx>{`
-    .tech-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.7rem;
-      margin-top: 0.7rem;
-      margin-bottom: 1.5rem;
-    }
-    .tech-tag {
-      padding: 0.35rem 1rem;
-      border-radius: 20px;
-      font-size: 0.98rem;
-      font-weight: 600;
-      background: #e0f7fa;
-      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-      cursor: default;
-      user-select: none;
-    }
-    .tech-tag:hover {
-      background: #fff;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.10);
-    }
-    .dark .tech-tag {
-      background: #23272f;
-      color: #7fd8e7 !important;
-      border: 1px solid #263445;
-    }
-    .dark .tech-tag:hover {
-      background: #263445;
-      }
-  `}</style>
-</div>
+          {[
+            { name: "Python", color: "#3776AB", icon: "🐍" },
+            { name: "Pandas", color: "#2a12a5", icon: "🦄" },
+            { name: "scikit-learn", color: "#F7931E", icon: "📊" },
+            { name: "Flask", color: "#704848", icon: "🌶️" },
+            { name: "Matplotlib", color: "#11557c", icon: "📈" },
+            { name: "Seaborn", color: "#43b7ba", icon: "🌊" }
+          ].map((tech) => (
+            <span
+              key={tech.name}
+              className="tech-tag"
+              style={{
+                background: tech.color + "22",
+                color: tech.color,
+                border: `1px solid ${tech.color}`,
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.4em"
+              }}
+            >
+              <span style={{ fontSize: "1.1em" }}>{tech.icon}</span>
+              {tech.name}
+            </span>
+          ))}
+        </div>
       </>
     ),
     en: (
@@ -103,68 +71,37 @@ const project = {
           <li>Performance comparison</li>
           <li>Flask interface for prediction</li>
         </ul>
-                <div className="tech-tags">
-  {[
-    { name: "Python", color: "#3776AB", icon: "🐍" },
-    { name: "Pandas", color: "#150458", icon: "🦄" },
-    { name: "scikit-learn", color: "#F7931E", icon: "📊" },
-    { name: "Flask", color: "#000", icon: "🌶️" },
-    { name: "Matplotlib", color: "#11557c", icon: "📈" },
-    { name: "Seaborn", color: "#43b7ba", icon: "🌊" }
-  ].map((tech, idx) => (
-    <span
-      key={tech.name}
-      className="tech-tag"
-      style={{
-        background: tech.color + "22",
-        color: tech.color,
-        border: `1px solid ${tech.color}`,
-        display: "inline-flex",
-        alignItems: "center",
-        gap: "0.4em"
-      }}
-    >
-      <span style={{ fontSize: "1.1em" }}>{tech.icon}</span>
-      {tech.name}
-    </span>
-  ))}
-  <style jsx>{`
-    .tech-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.7rem;
-      margin-top: 0.7rem;
-      margin-bottom: 1.5rem;
-    }
-    .tech-tag {
-      padding: 0.35rem 1rem;
-      border-radius: 20px;
-      font-size: 0.98rem;
-      font-weight: 600;
-      background: #e0f7fa;
-      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-      cursor: default;
-      user-select: none;
-    }
-    .tech-tag:hover {
-      background: #fff;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.10);
-    }
-    .dark .tech-tag {
-      background: #23272f;
-      color: #7fd8e7 !important;
-      border: 1px solid #263445;
-    }
-    .dark .tech-tag:hover {
-      background: #263445;
-      }
-  `}</style>
-</div>
+        <h3>Technologies</h3>
+        <div className="tech-tags">
+          {[
+            { name: "Python", color: "#3776AB", icon: "🐍" },
+            { name: "Pandas", color: "#2a12a5", icon: "🦄" },
+            { name: "scikit-learn", color: "#F7931E", icon: "📊" },
+            { name: "Flask", color: "#704848", icon: "🌶️" },
+            { name: "Matplotlib", color: "#11557c", icon: "📈" },
+            { name: "Seaborn", color: "#43b7ba", icon: "🌊" }
+          ].map((tech) => (
+            <span
+              key={tech.name}
+              className="tech-tag"
+              style={{
+                background: tech.color + "22",
+                color: tech.color,
+                border: `1px solid ${tech.color}`,
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.4em"
+              }}
+            >
+              <span style={{ fontSize: "1.1em" }}>{tech.icon}</span>
+              {tech.name}
+            </span>
+          ))}
+        </div>
       </>
     )
   },
-  github: "https://github.com/tonrepo/obesity-prediction",
+  github: "https://github.com/rett40/formulaire1",
   visualizations: [
     {
       title: { fr: "Matrices de confusion", en: "Confusion Matrices" },
@@ -230,6 +167,38 @@ const ui = {
 export default function ObesityProject({ lang = "fr", theme = "light" }) {
   const navigate = useNavigate();
   const [selectedImage, setSelectedImage] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(null);
+  const [currentList, setCurrentList] = useState([]);
+
+  const openImage = (img, list, idx) => {
+    setSelectedImage(img);
+    setCurrentList(list);
+    setCurrentIndex(idx);
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeImage = () => {
+    setSelectedImage(null);
+    setCurrentIndex(null);
+    setCurrentList([]);
+    document.body.style.overflow = 'auto';
+  };
+
+  const showPrev = (e) => {
+    e.stopPropagation();
+    if (currentIndex > 0) {
+      setSelectedImage(currentList[currentIndex - 1]);
+      setCurrentIndex(currentIndex - 1);
+    }
+  };
+
+  const showNext = (e) => {
+    e.stopPropagation();
+    if (currentIndex < currentList.length - 1) {
+      setSelectedImage(currentList[currentIndex + 1]);
+      setCurrentIndex(currentIndex + 1);
+    }
+  };
 
   return (
     <div className={`project-detail-container ${theme}`}>
@@ -263,7 +232,7 @@ export default function ObesityProject({ lang = "fr", theme = "light" }) {
                     src={img.url}
                     alt={img.alt[lang]}
                     className="viz-image"
-                    onClick={() => setSelectedImage(img)}
+                    onClick={() => openImage(img, viz.images, i)}
                   />
                 ))}
               </div>
@@ -280,7 +249,7 @@ export default function ObesityProject({ lang = "fr", theme = "light" }) {
                   src={item.url}
                   alt={item.alt[lang]}
                   className="interface-image"
-                  onClick={() => setSelectedImage(item)}
+                  onClick={() => openImage(item, project.interface, i)}
                 />
               </div>
             ))}
@@ -288,9 +257,18 @@ export default function ObesityProject({ lang = "fr", theme = "light" }) {
         </section>
       </section>
       {selectedImage && (
-        <div className="lightbox" onClick={() => setSelectedImage(null)}>
+        <div className="lightbox" onClick={closeImage}>
+          {currentIndex > 0 && (
+            <button
+              className="nav-button prev-button"
+              onClick={showPrev}
+              aria-label="Previous image"
+            >
+              <FaArrowLeft />
+            </button>
+          )}
           <div className="lightbox-content" onClick={e => e.stopPropagation()}>
-            <button className="close-button" onClick={() => setSelectedImage(null)}>
+            <button className="close-button" onClick={closeImage} aria-label="Close">
               <FaTimes />
             </button>
             <img
@@ -302,6 +280,15 @@ export default function ObesityProject({ lang = "fr", theme = "light" }) {
               {selectedImage.alt ? selectedImage.alt[lang] : ""}
             </p>
           </div>
+          {currentIndex < currentList.length - 1 && (
+            <button
+              className="nav-button next-button"
+              onClick={showNext}
+              aria-label="Next image"
+            >
+              <FaArrowRight />
+            </button>
+          )}
         </div>
       )}
       <style jsx>{`
@@ -357,6 +344,23 @@ export default function ObesityProject({ lang = "fr", theme = "light" }) {
         }
         .dark .project-description {
           color: #e0e6ed;
+        }
+        .tech-tags {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.7rem;
+          margin: 1rem 0 2rem;
+        }
+        .tech-tag {
+          padding: 0.35rem 1rem;
+          border-radius: 20px;
+          font-size: 0.98rem;
+          font-weight: 600;
+          transition: all 0.2s;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+          display: inline-flex;
+          align-items: center;
+          gap: 0.4em;
         }
         .project-links {
           display: flex;
@@ -456,13 +460,15 @@ export default function ObesityProject({ lang = "fr", theme = "light" }) {
         .interface-image:hover {
           transform: scale(1.05);
         }
+
+        /* Lightbox styles */
         .lightbox {
           position: fixed;
           top: 0;
           left: 0;
           width: 100%;
           height: 100%;
-          background: rgba(0, 0, 0, 0.9);
+          background: rgba(0, 0, 0, 0.95);
           display: flex;
           justify-content: center;
           align-items: center;
@@ -483,7 +489,7 @@ export default function ObesityProject({ lang = "fr", theme = "light" }) {
           max-height: 80vh;
           object-fit: contain;
           border-radius: 8px;
-          box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+          box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
         }
         .lightbox-caption {
           color: white;
@@ -491,43 +497,77 @@ export default function ObesityProject({ lang = "fr", theme = "light" }) {
           font-size: 1.2rem;
           text-align: center;
           max-width: 800px;
+          padding: 0.5rem 1rem;
+          background: rgba(0, 0, 0, 0.7);
+          border-radius: 4px;
         }
         .close-button {
           position: absolute;
-          top: -40px;
-          right: 0;
-          background: transparent;
+          top: -50px;
+          right: -10px;
+          background: rgba(0, 0, 0, 0.5);
           border: none;
           color: white;
-          font-size: 1.8rem;
+          font-size: 1.5rem;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
           cursor: pointer;
-          transition: transform 0.2s;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.3s ease;
+          opacity: 0.8;
         }
         .close-button:hover {
-          transform: rotate(90deg);
+          opacity: 1;
+          background: rgba(255, 0, 0, 0.7);
+          transform: scale(1.1);
+        }
+        .nav-button {
+          position: fixed;
+          top: 50%;
+          transform: translateY(-50%);
+          background: rgba(255, 255, 255, 0.2);
+          border: none;
+          color: white;
+          font-size: 2rem;
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: all 0.3s;
+          opacity: 0.7;
+          z-index: 10;
+        }
+        .nav-button:hover {
+          opacity: 1;
+          background: rgba(255, 255, 255, 0.3);
+          transform: translateY(-50%) scale(1.1);
+        }
+        .prev-button {
+          left: 30px;
+        }
+        .next-button {
+          right: 30px;
         }
         @media (max-width: 768px) {
-          .project-detail-container {
-            padding: 1.5rem;
+          .nav-button {
+            width: 40px;
+            height: 40px;
+            font-size: 1.5rem;
           }
-          .project-header h1 {
-            font-size: 2rem;
+          .prev-button {
+            left: 10px;
           }
-          .viz-images {
-            flex-direction: column;
-            gap: 1rem;
-          }
-          .interface-grid {
-            grid-template-columns: 1fr;
-          }
-          .lightbox-content {
-            max-width: 95%;
-          }
-          .lightbox-caption {
-            font-size: 1rem;
+          .next-button {
+            right: 10px;
           }
         }
       `}</style>
-      </div>
+    </div>
   );
 }
