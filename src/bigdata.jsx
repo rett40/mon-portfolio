@@ -1,568 +1,156 @@
-import React, { useState } from "react";
-import {
-  FaArrowLeft,
-  FaArrowRight,
-  FaGithub,
-  FaImages,
-  FaProjectDiagram,
-  FaChartLine,
-  FaTools,
-  FaTimes
-} from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+// Projet Big Data — Consommation d'eau mondiale — page harmonisée (ProjectPage)
+import React from "react";
+import ProjectPage from "./ProjectPage";
 
-import img1 from './screenshots/big1.PNG';
-import img2 from './screenshots/big2.PNG';
-import img3 from './screenshots/big3.PNG';
-import img4 from './screenshots/BIG4.PNG';
-import img5 from './screenshots/big5.PNG';
-import img6 from './screenshots/big6.PNG';
-import img7 from './screenshots/big7.PNG';
-import img8 from './screenshots/big8.PNG';
-import img9 from './screenshots/big9.PNG';
+import img1 from "./screenshots/big1.PNG";
+import img2 from "./screenshots/big2.PNG";
+import img3 from "./screenshots/big3.PNG";
+import img4 from "./screenshots/BIG4.PNG";
+import img5 from "./screenshots/big5.PNG";
+import img6 from "./screenshots/big6.PNG";
+import img7 from "./screenshots/big7.PNG";
+import img8 from "./screenshots/big8.PNG";
+import img9 from "./screenshots/big9.PNG";
 
 const project = {
-  title: {
-    fr: "Projet Big Data – Analyse de la consommation d'eau mondiale",
-    en: "Big Data Project – Global Water Consumption Analysis"
-  },
-  description: {
-    fr: (
-      <>
-        <p>
-          Projet d'analyse Big Data utilisant PySpark et visualisations graphiques pour étudier la consommation d'eau mondiale.
-          L'analyse comprend plusieurs visualisations clés montrant les tendances par pays, par secteur et l'évolution temporelle.
-        </p>
-        <h3>Objectifs</h3>
-        <ul>
-          <li>Nettoyage et traitement de données volumineuses avec PySpark</li>
-          <li>Analyse statistique et exploration des tendances de consommation</li>
-          <li>Visualisation interactive des résultats sous forme de graphiques</li>
-          <li>Identification des principaux pays et secteurs consommateurs</li>
-        </ul>
-      </>
-    ),
-    en: (
-      <>
-        <p>
-          Big Data project using PySpark and graphical visualizations to analyze global water consumption.
-          The analysis includes several key visualizations showing trends by country, by sector and temporal evolution.
-        </p>
-        <h3>Goals</h3>
-        <ul>
-          <li>Cleaning and processing large datasets with PySpark</li>
-          <li>Statistical analysis and trend exploration of consumption data</li>
-          <li>Interactive visualization of results through charts</li>
-          <li>Identification of main consuming countries and sectors</li>
-        </ul>
-      </>
-    )
-  },
-  github: "https://github.com/tonrepo/bigdata-water-consumption",
-  screenshots: [
-    {
-      url: img1,
-      alt: {
-        fr: "Top 5 pays par consommation totale d'eau",
-        en: "Top 5 countries by total water consumption"
-      }
+  hero: {
+    title: {
+      fr: "Big Data – Consommation d'Eau Mondiale",
+      en: "Big Data – Global Water Consumption"
     },
-    {
-      url: img2,
-      alt: {
-        fr: "Graphique du top 5 des pays consommateurs",
-        en: "Top 5 consuming countries chart"
-      }
+    subtitle: {
+      fr: "Traitement de données volumineuses avec PySpark et visualisations analytiques par pays, secteur et période.",
+      en: "Large-scale data processing with PySpark and analytical visualizations by country, sector and period."
     },
-    {
-      url: img3,
-      alt: {
-        fr: "Consommation moyenne par habitant",
-        en: "Average consumption per capita"
-      }
+    pitch: {
+      fr: "Projet d'analyse Big Data utilisant PySpark pour nettoyer et traiter les données de consommation d'eau mondiale, puis Matplotlib/Seaborn pour visualiser les tendances : principaux pays consommateurs, consommation par habitant, évolution annuelle et répartition sectorielle — présenté dans une interface Streamlit.",
+      en: "Big Data analysis project using PySpark to clean and process global water consumption data, then Matplotlib/Seaborn to visualize trends: top consuming countries, per-capita consumption, annual evolution and sector distribution — presented in a Streamlit interface."
     },
-    {
-      url: img4,
-      alt: {
-        fr: "Graphique de consommation moyenne par habitant",
-        en: "Average consumption per capita chart"
-      }
-    },
-    {
-      url: img5,
-      alt: {
-        fr: "Évolution annuelle de la consommation",
-        en: "Annual consumption evolution"
-      }
-    },
-    {
-      url: img6,
-      alt: {
-        fr: "Graphique d'évolution max/min annuelle",
-        en: "Annual max/min evolution chart"
-      }
-    },
-    {
-      url: img7,
-      alt: {
-        fr: "Répartition globale par secteur",
-        en: "Global distribution by sector"
-      }
-    },
-    {
-      url: img8,
-      alt: {
-        fr: "Consommation par pays et secteur",
-        en: "Consumption by country and sector"
-      }
-    },
-    {
-      url: img9,
-      alt: {
-        fr: "Graphique consommation par pays et secteur",
-        en: "Consumption by country and sector chart"
-      }
-    }
-  ],
-  process: {
-    fr: [
-      "Collecte et nettoyage des données avec PySpark",
-      "Exploration et analyse statistique des données",
-      "Calcul des indicateurs clés (totaux, moyennes, évolutions)",
-      "Création des visualisations avec Matplotlib et Seaborn",
-      "Analyse par pays, par habitant et par secteur",
-      "Déploiement d'une interface Streamlit pour présentation"
-    ],
-    en: [
-      "Data collection and cleaning with PySpark",
-      "Data exploration and statistical analysis",
-      "Calculation of key indicators (totals, averages, trends)",
-      "Creating visualizations with Matplotlib and Seaborn",
-      "Analysis by country, per capita and by sector",
-      "Deployment of Streamlit interface for presentation"
+    stack: [
+      { name: "PySpark", icon: "⚡", color: "#E25A1C" },
+      { name: "Python", icon: "🐍", color: "#3776AB" },
+      { name: "Matplotlib", icon: "📈", color: "#11557c" },
+      { name: "Seaborn", icon: "🌊", color: "#43b7ba" },
+      { name: "Streamlit", icon: "🚀", color: "#FF4B4B" }
     ]
   },
-  impact: {
-    fr: "Ce projet a permis d'identifier les principaux pays consommateurs, les tendances annuelles et la répartition sectorielle, fournissant une vue complète de l'usage mondial de l'eau. Les visualisations aident à comprendre les disparités entre pays et secteurs économiques.",
-    en: "This project identified the main consuming countries, annual trends and sector distribution, providing a comprehensive view of global water usage. The visualizations help understand disparities between countries and economic sectors."
-  },
-  tags: {
-    fr: ["Big Data", "PySpark", "Data Visualization", "Streamlit", "Python", "Matplotlib", "Seaborn", "Data Analysis"],
-    en: ["Big Data", "PySpark", "Data Visualization", "Streamlit", "Python", "Matplotlib", "Seaborn", "Data Analysis"]
-  }
-};
-
-const ui = {
-  back: { fr: "Retour aux projets", en: "Back to projects" },
-  gallery: { fr: "Galerie du projet", en: "Project Gallery" },
-  process: { fr: "Processus du projet", en: "Project Process" },
-  impact: { fr: "Impact", en: "Impact" },
-  tags: { fr: "Tags", en: "Tags" }
+  sections: [
+    {
+      type: "steps",
+      title: { fr: "Processus du Projet", en: "Project Process" },
+      steps: [
+        {
+          title: { fr: "Collecte & nettoyage (PySpark)", en: "Collection & cleaning (PySpark)" },
+          desc: {
+            fr: "Ingestion du dataset mondial et nettoyage distribué des données volumineuses.",
+            en: "Global dataset ingestion and distributed cleaning of large data."
+          }
+        },
+        {
+          title: { fr: "Exploration statistique", en: "Statistical exploration" },
+          desc: {
+            fr: "Analyse exploratoire des tendances de consommation par pays et secteur.",
+            en: "Exploratory analysis of consumption trends by country and sector."
+          }
+        },
+        {
+          title: { fr: "Indicateurs clés", en: "Key indicators" },
+          desc: {
+            fr: "Calcul des totaux, moyennes par habitant et évolutions max/min annuelles.",
+            en: "Computing totals, per-capita averages and annual max/min trends."
+          }
+        },
+        {
+          title: { fr: "Visualisations", en: "Visualizations" },
+          desc: {
+            fr: "Graphiques Matplotlib et Seaborn par pays, habitant et secteur.",
+            en: "Matplotlib and Seaborn charts by country, capita and sector."
+          }
+        },
+        {
+          title: { fr: "Déploiement Streamlit", en: "Streamlit deployment" },
+          desc: {
+            fr: "Interface web de présentation des résultats.",
+            en: "Web interface presenting the results."
+          }
+        }
+      ]
+    },
+    {
+      type: "gallery",
+      title: { fr: "Visualisations & Résultats", en: "Visualizations & Results" },
+      categories: [
+        {
+          title: { fr: "Pays Consommateurs", en: "Consuming Countries" },
+          description: {
+            fr: "Top 5 des pays par consommation totale d'eau.",
+            en: "Top 5 countries by total water consumption."
+          },
+          screenshots: [
+            { url: img1, alt: { fr: "Top 5 pays par consommation totale", en: "Top 5 countries by total consumption" } },
+            { url: img2, alt: { fr: "Graphique du top 5 des pays", en: "Top 5 countries chart" } }
+          ]
+        },
+        {
+          title: { fr: "Consommation par Habitant", en: "Per-Capita Consumption" },
+          description: {
+            fr: "Moyennes par habitant et comparaisons entre pays.",
+            en: "Per-capita averages and country comparisons."
+          },
+          screenshots: [
+            { url: img3, alt: { fr: "Consommation moyenne par habitant", en: "Average consumption per capita" } },
+            { url: img4, alt: { fr: "Graphique par habitant", en: "Per-capita chart" } }
+          ]
+        },
+        {
+          title: { fr: "Évolution Temporelle", en: "Temporal Evolution" },
+          description: {
+            fr: "Tendances annuelles et évolutions max/min de la consommation.",
+            en: "Annual trends and max/min consumption evolution."
+          },
+          screenshots: [
+            { url: img5, alt: { fr: "Évolution annuelle de la consommation", en: "Annual consumption evolution" } },
+            { url: img6, alt: { fr: "Évolution max/min annuelle", en: "Annual max/min evolution" } }
+          ]
+        },
+        {
+          title: { fr: "Répartition Sectorielle", en: "Sector Distribution" },
+          description: {
+            fr: "Répartition globale et croisement pays × secteur.",
+            en: "Global distribution and country × sector breakdown."
+          },
+          screenshots: [
+            { url: img7, alt: { fr: "Répartition globale par secteur", en: "Global distribution by sector" } },
+            { url: img8, alt: { fr: "Consommation par pays et secteur", en: "Consumption by country and sector" } },
+            { url: img9, alt: { fr: "Graphique pays × secteur", en: "Country × sector chart" } }
+          ]
+        }
+      ]
+    },
+    {
+      type: "list",
+      title: { fr: "Impact", en: "Impact" },
+      items: {
+        fr: [
+          "Identification des principaux pays consommateurs et des disparités entre régions",
+          "Vue complète de l'usage mondial de l'eau par secteur économique",
+          "Tendances annuelles mises en évidence pour anticiper les évolutions"
+        ],
+        en: [
+          "Identification of the main consuming countries and regional disparities",
+          "Comprehensive view of global water usage by economic sector",
+          "Annual trends highlighted to anticipate future evolution"
+        ]
+      }
+    },
+    {
+      type: "tags",
+      title: { fr: "Tags", en: "Tags" },
+      tags: ["Big Data", "PySpark", "Data Visualization", "Streamlit", "Python", "Matplotlib", "Seaborn", "EDA"]
+    }
+  ]
 };
 
 export default function BigDataProject({ lang = "fr", theme = "light" }) {
-  const navigate = useNavigate();
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-  const openImage = (img, index) => {
-    setSelectedImage(img);
-    setCurrentImageIndex(index);
-  };
-
-  const navigateImage = (direction) => {
-    let newIndex;
-    if (direction === 'prev') {
-      newIndex = currentImageIndex === 0 ? project.screenshots.length - 1 : currentImageIndex - 1;
-    } else {
-      newIndex = currentImageIndex === project.screenshots.length - 1 ? 0 : currentImageIndex + 1;
-    }
-    setSelectedImage(project.screenshots[newIndex]);
-    setCurrentImageIndex(newIndex);
-  };
-
-  return (
-    <div className={`project-detail-container ${theme}`}>
-      <button className="back-button" onClick={() => navigate(-1)}>
-        <FaArrowLeft /> {ui.back[lang]}
-      </button>
-      <header className="project-header">
-        <h1>{project.title[lang]}</h1>
-      </header>
-      <section className="project-content">
-        <div className="project-description">{project.description[lang]}</div>
-        <section className="screenshots-section">
-          <h2>
-            <FaImages className="mr-2" />
-            {ui.gallery[lang]}
-          </h2>
-          <div className="screenshots-grid">
-            {project.screenshots.map((img, i) => (
-              <div
-                key={i}
-                className="screenshot-item"
-                onClick={() => openImage(img, i)}
-              >
-                <img
-                  src={img.url}
-                  alt={img.alt[lang]}
-                  className="screenshot-image"
-                />
-                <p className="screenshot-caption">{img.alt[lang]}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-        <section className="screenshots-section">
-          <h2>
-            <FaProjectDiagram className="mr-2" />
-            {ui.process[lang]}
-          </h2>
-          <ul>
-            {project.process[lang].map((step, idx) => (
-              <li key={idx}>{step}</li>
-            ))}
-          </ul>
-        </section>
-        <section className="screenshots-section">
-          <h2>
-            <FaChartLine className="mr-2" />
-            {ui.impact[lang]}
-          </h2>
-          <div className="impact-block">
-            <p>{project.impact[lang]}</p>
-          </div>
-        </section>
-        <section className="screenshots-section">
-          <h2>
-            <FaTools className="mr-2" />
-            {ui.tags[lang]}
-          </h2>
-          <div className="tags-block">
-            {project.tags[lang].map((tag, idx) => (
-              <span key={idx} className="tag">{tag}</span>
-            ))}
-          </div>
-        </section>
-      </section>
-      {selectedImage && (
-        <div className="lightbox" onClick={() => setSelectedImage(null)}>
-          <button 
-            className="nav-button prev-button" 
-            onClick={(e) => {
-              e.stopPropagation();
-              navigateImage('prev');
-            }}
-          >
-            <FaArrowLeft />
-          </button>
-          <div className="lightbox-content" onClick={e => e.stopPropagation()}>
-            <button 
-              className="close-button" 
-              onClick={(e) => {
-                e.stopPropagation();
-                setSelectedImage(null);
-              }}
-            >
-              <FaTimes />
-            </button>
-            <img
-              src={selectedImage.url}
-              alt={selectedImage.alt[lang]}
-              className="lightbox-image"
-            />
-            <p className="lightbox-caption">{selectedImage.alt[lang]}</p>
-          </div>
-          <button 
-            className="nav-button next-button" 
-            onClick={(e) => {
-              e.stopPropagation();
-              navigateImage('next');
-            }}
-          >
-            <FaArrowRight />
-          </button>
-        </div>
-      )}
-      <style jsx>{`
-        .project-detail-container {
-          max-width: 1200px;
-          margin: 0 auto;
-          padding: 2rem;
-          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-          color: #333;
-          background: #f7f9fa;
-          transition: background 0.3s, color 0.3s;
-        }
-        .dark.project-detail-container {
-          background: #181c22;
-          color: #f7f9fa;
-        }
-        .back-button {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.5rem;
-          background: #2c3e50;
-          color: white;
-          border: none;
-          padding: 0.7rem 1.2rem;
-          border-radius: 6px;
-          cursor: pointer;
-          margin-bottom: 2rem;
-          transition: all 0.2s;
-          font-weight: 500;
-          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .back-button:hover {
-          background: #1a252f;
-          transform: translateY(-2px);
-          box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-        }
-        .project-header h1 {
-          font-size: 2.5rem;
-          color: #2c3e50;
-          margin-bottom: 2rem;
-          font-weight: 700;
-          position: relative;
-          padding-bottom: 0.5rem;
-        }
-        .dark .project-header h1 {
-          color: #e0e6ed;
-        }
-        .project-description {
-          line-height: 1.7;
-          margin-bottom: 2rem;
-          font-size: 1.1rem;
-          color: #333;
-        }
-        .dark .project-description {
-          color: #e0e6ed;
-        }
-        .tech-tags {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 0.7rem;
-          margin-top: 0.7rem;
-          margin-bottom: 1.5rem;
-        }
-        .tech-tag {
-          padding: 0.35rem 1rem;
-          border-radius: 20px;
-          font-size: 0.98rem;
-          font-weight: 600;
-          background: #e0f7fa;
-          transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-          cursor: default;
-          user-select: none;
-        }
-        .tech-tag:hover {
-          background: #fff;
-          box-shadow: 0 4px 16px rgba(0,0,0,0.10);
-        }
-        .dark .tech-tag {
-          background: #23272f;
-          color: #7fd8e7 !important;
-          border: 1px solid #263445;
-        }
-        .dark .tech-tag:hover {
-          background: #263445;
-        }
-        .screenshots-section {
-          margin-top: 4rem;
-        }
-        .screenshots-section h2 {
-          font-size: 2rem;
-          color: #2c3e50;
-          margin-bottom: 2rem;
-          font-weight: 600;
-          position: relative;
-          padding-bottom: 0.5rem;
-          display: flex;
-          align-items: center;
-          gap: 0.7rem;
-        }
-        .dark .screenshots-section h2 {
-          color: #e0e6ed;
-        }
-        .screenshots-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-          gap: 2rem;
-        }
-        .screenshot-item {
-          background: white;
-          border-radius: 10px;
-          overflow: hidden;
-          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-          transition: all 0.3s ease;
-          cursor: pointer;
-          display: flex;
-          flex-direction: column;
-        }
-        .dark .screenshot-item {
-          background: #23272f;
-          color: #f7f9fa;
-        }
-        .screenshot-item:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-        }
-        .screenshot-image {
-          width: 100%;
-          height: auto;
-          object-fit: cover;
-          border-radius: 10px 10px 0 0;
-        }
-        .screenshot-caption {
-          padding: 1.2rem;
-          margin: 0;
-          font-size: 0.95rem;
-          color: #555;
-          text-align: center;
-          background: #f9f9f9;
-        }
-        .dark .screenshot-caption {
-          background: #23272f;
-          color: #e0e6ed;
-        }
-        .impact-block {
-          background: #e0f7fa;
-          color: #00838f;
-          padding: 1.2rem 2rem;
-          border-radius: 12px;
-          font-size: 1.1rem;
-          font-weight: 500;
-          margin-bottom: 2rem;
-        }
-        .tags-block {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 0.7rem;
-        }
-        .tag {
-          background: #e0f7fa;
-          color: #00838f;
-          padding: 0.4rem 1rem;
-          border-radius: 20px;
-          font-size: 0.9rem;
-          font-weight: 600;
-          box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-        .dark .tag {
-          background: #263445;
-          color: #7fd8e7;
-        }
-        .lightbox {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: rgba(0, 0, 0, 0.9);
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          z-index: 1000;
-          padding: 2rem;
-          box-sizing: border-box;
-        }
-        .lightbox-content {
-          position: relative;
-          max-width: 90%;
-          max-height: 90%;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-        }
-        .lightbox-image {
-          max-width: 100%;
-          max-height: 80vh;
-          object-fit: contain;
-          border-radius: 8px;
-          box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
-        }
-        .lightbox-caption {
-          color: white;
-          margin-top: 1rem;
-          font-size: 1.2rem;
-          text-align: center;
-          max-width: 800px;
-        }
-        .close-button {
-          position: absolute;
-          top: -40px;
-          right: 0;
-          background: transparent;
-          border: none;
-          color: white;
-          font-size: 1.8rem;
-          cursor: pointer;
-          transition: transform 0.2s;
-          opacity: 0.8;
-        }
-        .close-button:hover {
-          opacity: 1;
-          transform: scale(1.1);
-        }
-        .nav-button {
-          position: fixed;
-          top: 50%;
-          transform: translateY(-50%);
-          background: rgba(255, 255, 255, 0.2);
-          border: none;
-          color: white;
-          font-size: 2rem;
-          width: 60px;
-          height: 60px;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-          transition: all 0.3s;
-          opacity: 0.7;
-        }
-        .nav-button:hover {
-          opacity: 1;
-          background: rgba(255, 255, 255, 0.3);
-          transform: translateY(-50%) scale(1.1);
-        }
-        .prev-button {
-          left: 30px;
-        }
-        .next-button {
-          right: 30px;
-        }
-        @media (max-width: 768px) {
-          .project-detail-container {
-            padding: 1.5rem;
-          }
-          .project-header h1 {
-            font-size: 2rem;
-          }
-          .screenshots-grid {
-            grid-template-columns: 1fr;
-          }
-          .lightbox-content {
-            max-width: 95%;
-          }
-          .lightbox-caption {
-            font-size: 1rem;
-          }
-          .nav-button {
-            width: 40px;
-            height: 40px;
-            font-size: 1.5rem;
-          }
-          .prev-button {
-            left: 10px;
-          }
-          .next-button {
-            right: 10px;
-          }
-        }
-      `}</style>
-      </div>
-  );
+  return <ProjectPage lang={lang} theme={theme} project={project} />;
 }

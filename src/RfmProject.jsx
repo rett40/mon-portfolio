@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import { FaArrowLeft, FaGithub, FaImages, FaProjectDiagram, FaChartLine, FaTools, FaTimes, FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+// Projet RFM — page projet harmonisée (ProjectPage)
+import React from "react";
+import ProjectPage from "./ProjectPage";
 
-// Import des images
 import imgRfmOverview from "./screenshots/rfm1.PNG";
 import imgRfmSegments from "./screenshots/rfm2.PNG";
 import imgRfmKmeans from "./screenshots/rfm3.PNG";
@@ -14,561 +13,139 @@ import imgForecastClients from "./screenshots/rfm8.PNG";
 import imgForecastQuantity from "./screenshots/rfm9.PNG";
 
 const project = {
-  title: {
-    fr: "Projet RFM – Segmentation et Prédiction Clients",
-    en: "RFM Project – Customer Segmentation & Prediction"
-  },
-  description: {
-    fr: (
-      <>
-        <p>
-          Analyse RFM (Récence, Fréquence, Montant) pour segmenter les clients avec <strong>KMeans</strong> et <strong>CAH</strong>, et prédiction des ventes via séries temporelles.
-        </p>
-        <h3>Objectifs du projet</h3>
-        <ul>
-          <li>Segmenter les clients selon leur comportement d'achat.</li>
-          <li>Analyser et classifier les produits vendus.</li>
-          <li>Prédire l'évolution des ventes et du nombre de clients.</li>
-          <li>Visualiser les résultats dans une interface web.</li>
-        </ul>
-      </>
-    ),
-    en: (
-      <>
-        <p>
-          RFM (Recency, Frequency, Monetary) analysis to segment customers with <strong>KMeans</strong> and <strong>Hierarchical Clustering</strong>, plus sales forecasting using time series.
-        </p>
-        <h3>Project objectives</h3>
-        <ul>
-          <li>Segment customers based on purchase behavior.</li>
-          <li>Analyze and classify sold products.</li>
-          <li>Predict sales and customer count trends.</li>
-          <li>Visualize results on a web interface.</li>
-        </ul>
-      </>
-    )
-  },
-  github: "https://github.com/rett40/rfm-app",
-  screenshots: [
-    { url: imgRfmOverview, alt: { fr: "Aperçu des clients RFM", en: "RFM Customer Overview" } },
-    { url: imgRfmSegments, alt: { fr: "Répartition des segments (KMeans)", en: "Segment Distribution (KMeans)" } },
-    { url: imgRfmKmeans, alt: { fr: "Segmentation KMeans des clients", en: "Customer Segmentation (KMeans)" } },
-    { url: imgRfmDendrogram, alt: { fr: "Dendrogramme CAH", en: "Hierarchical Dendrogram" } },
-    { url: imgProductClusters, alt: { fr: "Données produits avec cluster", en: "Clustered Product Data" } },
-    { url: imgProductSummary, alt: { fr: "Résumé des clusters de produits", en: "Product Cluster Summary" } },
-    { url: imgMonthlyView, alt: { fr: "Vue mensuelle (clients & ventes)", en: "Monthly View (Customers & Sales)" } },
-    { url: imgForecastClients, alt: { fr: "Prévision : NbClients", en: "Forecast: Number of Clients" } },
-    { url: imgForecastQuantity, alt: { fr: "Prévision : Quantité Totale", en: "Forecast: Total Quantity" } }
-  ],
-  process: {
-    fr: [
-      "Calcul et normalisation des scores RFM",
-      "Segmentation avec KMeans et CAH",
-      "Clustering des produits vendus",
-      "Modélisation et prévision par séries temporelles",
-      "Création d'une interface web avec Streamlit"
+  hero: {
+    title: {
+      fr: "Segmentation RFM & Prédiction Clients",
+      en: "RFM Segmentation & Customer Forecasting"
+    },
+    subtitle: {
+      fr: "Clustering des clients et des produits, et prévision des ventes par séries temporelles, dans une application Streamlit.",
+      en: "Customer and product clustering plus time-series sales forecasting, in a Streamlit application."
+    },
+    pitch: {
+      fr: "Analyse RFM (Récence, Fréquence, Montant) pour segmenter les clients avec KMeans et la Classification Ascendante Hiérarchique (CAH), clustering des produits vendus, et prédiction de l'évolution des ventes et du nombre de clients via séries temporelles — le tout visualisé dans une interface web Streamlit.",
+      en: "RFM analysis (Recency, Frequency, Monetary) to segment customers with KMeans and Hierarchical Clustering, product clustering, and time-series forecasting of sales and customer counts — all visualized in a Streamlit web interface."
+    },
+    stack: [
+      { name: "Python", icon: "🐍", color: "#3776AB" },
+      { name: "scikit-learn", icon: "📊", color: "#F7931E" },
+      { name: "Pandas", icon: "🧮", color: "#5b3cd5" },
+      { name: "Matplotlib", icon: "📈", color: "#11557c" },
+      { name: "Streamlit", icon: "🚀", color: "#FF4B4B" }
     ],
-    en: [
-      "Calculate and normalize RFM scores",
-      "Segmentation using KMeans and hierarchical clustering",
-      "Clustering of sold products",
-      "Time series forecasting modeling",
-      "Build web interface with Streamlit"
-    ]
+    links: [{ kind: "code", url: "https://github.com/rett40/rfm-app" }]
   },
-  impact: {
-    fr: "Cette segmentation a permis d'améliorer le ciblage marketing et d'anticiper les tendances des ventes.",
-    en: "This segmentation improved marketing targeting and forecasted sales trends."
-  },
-  tags: {
-    fr: ["Data Science", "Clustering", "Prévision", "Business Intelligence"],
-    en: ["Data Science", "Clustering", "Forecasting", "Business Intelligence"]
-  }
-};
-
-const ui = {
-  back: { fr: "Retour aux projets", en: "Back to projects" },
-  code: { fr: "Code source", en: "Source code" },
-  gallery: { fr: "Galerie du projet", en: "Project Gallery" },
-  process: { fr: "Processus du projet", en: "Project Process" },
-  impact: { fr: "Impact", en: "Impact" },
-  tags: { fr: "Tags", en: "Tags" }
+  sections: [
+    {
+      type: "steps",
+      title: { fr: "Démarche du Projet", en: "Project Workflow" },
+      steps: [
+        {
+          title: { fr: "Scores RFM", en: "RFM scores" },
+          desc: {
+            fr: "Calcul et normalisation des scores Récence, Fréquence et Montant par client.",
+            en: "Computing and normalizing Recency, Frequency and Monetary scores per customer."
+          }
+        },
+        {
+          title: { fr: "Segmentation clients", en: "Customer segmentation" },
+          desc: {
+            fr: "Clustering avec KMeans (choix du k) et validation par dendrogramme CAH.",
+            en: "KMeans clustering (choosing k) validated by a hierarchical dendrogram."
+          }
+        },
+        {
+          title: { fr: "Clustering des produits", en: "Product clustering" },
+          desc: {
+            fr: "Regroupement des produits vendus selon leur comportement de vente.",
+            en: "Grouping sold products by their sales behavior."
+          }
+        },
+        {
+          title: { fr: "Prévisions", en: "Forecasting" },
+          desc: {
+            fr: "Modélisation par séries temporelles du nombre de clients et des quantités vendues.",
+            en: "Time-series modeling of customer counts and sold quantities."
+          }
+        },
+        {
+          title: { fr: "Interface web", en: "Web interface" },
+          desc: {
+            fr: "Application Streamlit interactive pour explorer segments et prévisions.",
+            en: "Interactive Streamlit application to explore segments and forecasts."
+          }
+        }
+      ]
+    },
+    {
+      type: "gallery",
+      title: { fr: "Galerie du Projet", en: "Project Gallery" },
+      categories: [
+        {
+          title: { fr: "Segmentation Clients (RFM)", en: "Customer Segmentation (RFM)" },
+          description: {
+            fr: "Vue d'ensemble des scores RFM, répartition des segments KMeans et dendrogramme CAH.",
+            en: "RFM score overview, KMeans segment distribution and hierarchical dendrogram."
+          },
+          screenshots: [
+            { url: imgRfmOverview, alt: { fr: "Aperçu des clients RFM", en: "RFM customer overview" } },
+            { url: imgRfmSegments, alt: { fr: "Répartition des segments (KMeans)", en: "Segment distribution (KMeans)" } },
+            { url: imgRfmKmeans, alt: { fr: "Segmentation KMeans des clients", en: "KMeans customer segmentation" } },
+            { url: imgRfmDendrogram, alt: { fr: "Dendrogramme CAH", en: "Hierarchical dendrogram" } }
+          ]
+        },
+        {
+          title: { fr: "Clustering des Produits", en: "Product Clustering" },
+          description: {
+            fr: "Classification des produits vendus et résumé par cluster.",
+            en: "Sold product classification and per-cluster summary."
+          },
+          screenshots: [
+            { url: imgProductClusters, alt: { fr: "Données produits avec cluster", en: "Clustered product data" } },
+            { url: imgProductSummary, alt: { fr: "Résumé des clusters de produits", en: "Product cluster summary" } }
+          ]
+        },
+        {
+          title: { fr: "Prévisions (Séries Temporelles)", en: "Forecasting (Time Series)" },
+          description: {
+            fr: "Vue mensuelle et prévision du nombre de clients et des quantités vendues.",
+            en: "Monthly view and forecast of customer counts and sold quantities."
+          },
+          screenshots: [
+            { url: imgMonthlyView, alt: { fr: "Vue mensuelle (clients & ventes)", en: "Monthly view (customers & sales)" } },
+            { url: imgForecastClients, alt: { fr: "Prévision — Nombre de clients", en: "Forecast — Number of clients" } },
+            { url: imgForecastQuantity, alt: { fr: "Prévision — Quantité totale", en: "Forecast — Total quantity" } }
+          ]
+        }
+      ]
+    },
+    {
+      type: "list",
+      title: { fr: "Impact", en: "Impact" },
+      items: {
+        fr: [
+          "Ciblage marketing amélioré grâce à des segments clients actionnables",
+          "Anticipation des tendances de ventes par les prévisions temporelles",
+          "Exploration interactive des résultats via l'application Streamlit"
+        ],
+        en: [
+          "Improved marketing targeting through actionable customer segments",
+          "Sales trend anticipation through time-series forecasting",
+          "Interactive result exploration through the Streamlit app"
+        ]
+      }
+    },
+    {
+      type: "tags",
+      title: { fr: "Tags", en: "Tags" },
+      tags: {
+        fr: ["Data Science", "Clustering", "KMeans", "CAH", "Prévision", "Business Intelligence"],
+        en: ["Data Science", "Clustering", "KMeans", "Hierarchical Clustering", "Forecasting", "Business Intelligence"]
+      }
+    }
+  ]
 };
 
 export default function RfmProject({ lang = "fr", theme = "light" }) {
-  const navigate = useNavigate();
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const openImage = (img) => {
-    const index = project.screenshots.findIndex(s => s.url === img.url);
-    setSelectedImage(img);
-    setCurrentIndex(index);
-    document.body.style.overflow = 'hidden';
-  };
-
-  const closeImage = () => {
-    setSelectedImage(null);
-    document.body.style.overflow = 'auto';
-  };
-
-  const showPrev = (e) => {
-    e.stopPropagation();
-    if (currentIndex > 0) {
-      const newIndex = currentIndex - 1;
-      setSelectedImage(project.screenshots[newIndex]);
-      setCurrentIndex(newIndex);
-    }
-  };
-
-  const showNext = (e) => {
-    e.stopPropagation();
-    if (currentIndex < project.screenshots.length - 1) {
-      const newIndex = currentIndex + 1;
-      setSelectedImage(project.screenshots[newIndex]);
-      setCurrentIndex(newIndex);
-    }
-  };
-
-  return (
-    <div className={`project-detail-container ${theme}`}>
-      <button className="back-button" onClick={() => navigate(-1)}>
-        <FaArrowLeft /> {ui.back[lang]}
-      </button>
-
-      <header className="project-header">
-        <h1>{project.title[lang]}</h1>
-      </header>
-
-      <section className="project-content">
-        <div className="project-description">
-          {project.description[lang]}
-          <h3>Technologies utilisées</h3>
-          <div className="tech-tags">
-            {["Python", "Scikit-learn", "Pandas", "Matplotlib", "Streamlit"].map((tech, index) => (
-              <span key={index} className="tech-tag">{tech}</span>
-            ))}
-          </div>
-        </div>
-
-        <div className="project-links">
-          <a href={project.github} target="_blank" rel="noopener noreferrer" className="project-link">
-            <FaGithub /> {ui.code[lang]}
-          </a>
-        </div>
-
-        <section className="screenshots-section">
-          <h2><FaImages className="mr-2" />{ui.gallery[lang]}</h2>
-          <div className="screenshots-grid">
-            {project.screenshots.map((img, i) => (
-              <div key={i} className="screenshot-item" onClick={() => openImage(img)}>
-                <img src={img.url} alt={img.alt[lang]} className="screenshot-image" />
-                <p className="screenshot-caption">{img.alt[lang]}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="screenshots-section">
-          <h2><FaProjectDiagram className="mr-2" />{ui.process[lang]}</h2>
-          <ul>
-            {project.process[lang].map((step, idx) => (
-              <li key={idx}>{step}</li>
-            ))}
-          </ul>
-        </section>
-
-        <section className="screenshots-section">
-          <h2><FaChartLine className="mr-2" />{ui.impact[lang]}</h2>
-          <div className="impact-block">
-            <p>{project.impact[lang]}</p>
-          </div>
-        </section>
-
-        <section className="screenshots-section">
-          <h2><FaTools className="mr-2" />{ui.tags[lang]}</h2>
-          <div className="tags-block">
-            {project.tags[lang].map((tag, idx) => (
-              <span key={idx} className="tag">{tag}</span>
-            ))}
-          </div>
-        </section>
-      </section>
-
-      {selectedImage && (
-        <div className="lightbox" onClick={closeImage}>
-          <button
-            className="nav-button prev"
-            onClick={showPrev}
-            aria-label="Previous image"
-            style={{ display: currentIndex > 0 ? "flex" : "none" }}
-          >
-            <FaChevronLeft />
-          </button>
-          <div className="lightbox-content" onClick={e => e.stopPropagation()}>
-            <button aria-label="Close" className="close-button" onClick={closeImage}>
-              <FaTimes />
-            </button>
-            <img src={selectedImage.url} alt={selectedImage.alt[lang]} className="lightbox-image" />
-            <p className="lightbox-caption">{selectedImage.alt[lang]}</p>
-          </div>
-          <button
-            className="nav-button next"
-            onClick={showNext}
-            aria-label="Next image"
-            style={{ display: currentIndex < project.screenshots.length - 1 ? "flex" : "none" }}
-          >
-            <FaChevronRight />
-          </button>
-        </div>
-      )}
-
-      <style jsx>{`
-        .project-detail-container {
-          max-width: 1200px;
-          margin: 0 auto;
-          padding: 2rem;
-          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-          color: #333;
-          background: #f7f9fa;
-          transition: background 0.3s, color 0.3s;
-        }
-        .dark.project-detail-container {
-          background: #181c22;
-          color: #f7f9fa;
-        }
-        .back-button {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.5rem;
-          background: #2c3e50;
-          color: white;
-          border: none;
-          padding: 0.7rem 1.2rem;
-          border-radius: 6px;
-          cursor: pointer;
-          margin-bottom: 2rem;
-          transition: all 0.2s;
-          font-weight: 500;
-          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .back-button:hover {
-          background: #1a252f;
-          transform: translateY(-2px);
-          box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-        }
-        .project-header h1 {
-          font-size: 2.5rem;
-          color: #2c3e50;
-          margin-bottom: 2rem;
-          font-weight: 700;
-          position: relative;
-          padding-bottom: 0.5rem;
-        }
-        .dark .project-header h1 {
-          color: #e0e6ed;
-        }
-        .project-description {
-          line-height: 1.7;
-          margin-bottom: 2rem;
-          font-size: 1.1rem;
-          color: #333;
-        }
-        .dark .project-description {
-          color: #e0e6ed;
-        }
-        .tech-tags {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 0.7rem;
-          margin-top: 0.7rem;
-          margin-bottom: 1.5rem;
-        }
-        .tech-tag {
-          background: #e0f7fa;
-          color: #00838f;
-          padding: 0.35rem 1rem;
-          border-radius: 20px;
-          font-weight: 600;
-          font-size: 0.95rem;
-          box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-          user-select: none;
-        }
-        .dark .tech-tag {
-          background: #263445;
-          color: #7fd8e7;
-        }
-        .project-links {
-          display: flex;
-          gap: 1.5rem;
-          margin: 3rem 0;
-        }
-        .project-link {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.7rem;
-          background: linear-gradient(135deg, #3498db, #2ecc71);
-          color: white;
-          padding: 0.8rem 1.5rem;
-          border-radius: 6px;
-          text-decoration: none;
-          transition: all 0.3s;
-          font-weight: 500;
-          box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .dark .project-link {
-          background: linear-gradient(135deg, #263445, #2ecc71);
-          color: #f7f9fa;
-        }
-        .project-link:hover {
-          transform: translateY(-3px);
-          box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-          background: linear-gradient(135deg, #2980b9, #27ae60);
-        }
-        .dark .project-link:hover {
-          background: linear-gradient(135deg, #1a252f, #27ae60);
-        }
-        .screenshots-section {
-          margin-top: 4rem;
-        }
-        .screenshots-section h2 {
-          font-size: 2rem;
-          color: #2c3e50;
-          margin-bottom: 2rem;
-          font-weight: 600;
-          position: relative;
-          padding-bottom: 0.5rem;
-          display: flex;
-          align-items: center;
-          gap: 0.7rem;
-        }
-        .dark .screenshots-section h2 {
-          color: #e0e6ed;
-        }
-        .screenshots-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-          gap: 2rem;
-        }
-        .screenshot-item {
-          background: white;
-          border-radius: 10px;
-          overflow: hidden;
-          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-          transition: all 0.3s ease;
-          cursor: pointer;
-        }
-        .dark .screenshot-item {
-          background: #23272f;
-          color: #f7f9fa;
-        }
-        .screenshot-item:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-        }
-        .screenshot-image {
-          max-width: 480px;
-          width: 100%;
-          border-radius: 10px;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-          cursor: pointer;
-          transition: transform 0.2s;
-        }
-        .screenshot-image:hover {
-          transform: scale(1.05);
-        }
-        .screenshot-caption {
-          padding: 1.2rem;
-          margin: 0;
-          font-size: 0.95rem;
-          color: #555;
-          text-align: center;
-          background: #f9f9f9;
-        }
-        .dark .screenshot-caption {
-          background: #23272f;
-          color: #e0e6ed;
-        }
-        .impact-block {
-          background: #e0f7fa;
-          color: #00838f;
-          padding: 1.2rem 2rem;
-          border-radius: 12px;
-          font-size: 1.1rem;
-          font-weight: 500;
-          margin-bottom: 2rem;
-        }
-        .tags-block {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 1rem;
-          margin-bottom: 3rem;
-        }
-        .tag {
-          background: #3498db;
-          color: white;
-          padding: 0.5rem 1rem;
-          border-radius: 20px;
-          font-weight: 600;
-          font-size: 0.95rem;
-          user-select: none;
-          box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-        }
-        .dark .tag {
-          background: #2a80b9;
-        }
-
-        /* Lightbox styles */
-        .lightbox {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: rgba(0, 0, 0, 0.95);
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          z-index: 1000;
-          padding: 2rem;
-          box-sizing: border-box;
-        }
-        .lightbox-content {
-          position: relative;
-          max-width: 90%;
-          max-height: 90%;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-        }
-        .lightbox-image {
-          max-width: 100%;
-          max-height: 80vh;
-          object-fit: contain;
-          border-radius: 8px;
-          box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
-        }
-        .lightbox-caption {
-          color: white;
-          margin-top: 1rem;
-          font-size: 1.2rem;
-          text-align: center;
-          max-width: 800px;
-          padding: 0.5rem 1rem;
-          background: rgba(0, 0, 0, 0.7);
-          border-radius: 4px;
-        }
-        .close-button {
-          position: absolute;
-          top: -50px;
-          right: -10px;
-          background: rgba(0, 0, 0, 0.5);
-          border: none;
-          color: white;
-          font-size: 1.5rem;
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transition: all 0.3s ease;
-          opacity: 0.8;
-        }
-        .close-button:hover {
-          opacity: 1;
-          background: rgba(255, 0, 0, 0.7);
-          transform: scale(1.1);
-        }
-        .nav-button {
-          position: absolute;
-          top: 50%;
-          transform: translateY(-50%);
-          background: rgba(255, 255, 255, 0.1);
-          border: none;
-          color: white;
-          font-size: 1.8rem;
-          width: 60px;
-          height: 60px;
-          border-radius: 50%;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transition: all 0.3s ease;
-          backdrop-filter: blur(10px);
-          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-          opacity: 0.9;
-          z-index: 10;
-        }
-        .nav-button:hover {
-          background: rgba(52, 152, 219, 0.6);
-          transform: translateY(-50%) scale(1.1);
-          opacity: 1;
-          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-        }
-        .nav-button.prev {
-          left: 30px;
-        }
-        .nav-button.next {
-          right: 30px;
-        }
-        .nav-button:focus {
-          outline: 2px solid rgba(52, 152, 219, 0.8);
-          outline-offset: 2px;
-        }
-
-        @media (max-width: 768px) {
-          .project-detail-container {
-            padding: 1.5rem;
-          }
-          .project-header h1 {
-            font-size: 2rem;
-          }
-          .screenshots-grid {
-            grid-template-columns: 1fr;
-          }
-          .nav-button {
-            width: 50px;
-            height: 50px;
-            font-size: 1.5rem;
-          }
-          .nav-button.prev {
-            left: 15px;
-          }
-          .nav-button.next {
-            right: 15px;
-          }
-          .lightbox-content {
-            max-width: 95%;
-          }
-          .lightbox-caption {
-            font-size: 1rem;
-          }
-        }
-
-        @media (max-width: 480px) {
-          .project-links {
-            flex-direction: column;
-            gap: 1rem;
-          }
-          .project-link {
-            justify-content: center;
-          }
-          .nav-button {
-            width: 40px;
-            height: 40px;
-            font-size: 1.2rem;
-          }
-          .nav-button.prev {
-            left: 10px;
-          }
-          .nav-button.next {
-            right: 10px;
-          }
-      }
-     `}</style>
-    </div>
-  );
+  return <ProjectPage lang={lang} theme={theme} project={project} />;
 }

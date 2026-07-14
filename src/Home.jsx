@@ -9,12 +9,26 @@ import img5 from './screenshots/big0.jpg';
 import img6 from './screenshots/movies.jfif';
 import img7 from './screenshots/bi.jpg';
 import imgJobMatcher from './screenshots/logo1.png';
+import imgLcValidator from './screenshots/capture_lc_validator/acceuil.PNG';
 import profilePhoto from './screenshots/profile.jpg';
 import cvEn from './screenshots/cv_englais.pdf';
-import cvFr from './screenshots/MohamedAzizBenMohamed.pdf';
+import cvFr from './screenshots/cv_mohamed_aziz.pdf';
 
 // Multilingual content for projects and UI
 const projects = [
+  {
+    id: "lc-validator",
+    title: {
+      fr: "LC-Validator – Analyse de Risque des Lettres de Crédit par IA Explicable (XAI)",
+      en: "LC-Validator – Letter of Credit Risk Analysis with Explainable AI (XAI)"
+    },
+    image: imgLcValidator,
+    summary: {
+      fr: "Plateforme à deux pipelines IA validant le SWIFT MT700 (NER BERT fine-tuné, UCP 600, scoring XGBoost + SHAP) puis les documents commerciaux et leur cohérence (LayoutLMv3, DeBERTa NLI). 8 microservices Docker + MLOps. Mémoire de fin d'études chez Excellia Solution.",
+      en: "Two-pipeline AI platform validating the SWIFT MT700 (fine-tuned BERT NER, UCP 600, XGBoost + SHAP scoring) then the commercial documents and their consistency (LayoutLMv3, DeBERTa NLI). 8 Docker microservices + MLOps. Graduation thesis at Excellia Solution."
+    },
+    tags: ["Angular", "Spring Boot", "BERT NER", "LayoutLMv3", "DeBERTa NLI", "XGBoost", "XAI / SHAP", "Docker", "MLOps"]
+  },
   {
     id: "smart-job-matcher",
     title: {
@@ -357,6 +371,8 @@ export default function Home({ lang = "fr", theme = "light" }) {
                   navigate("/dash");
                 } else if (project.id === "smart-job-matcher") {
                   navigate("/smart-job-matcher");
+                } else if (project.id === "lc-validator") {
+                  navigate("/lc-validator");
                 } else {
                   navigate(`/projet/${project.id}`);
                 }

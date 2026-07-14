@@ -9,6 +9,7 @@ import BigData from './bigdata';
 import MovieRecommender from './MovieRecommender';
 import Dash from './dash';
 import SmartJobMatcher from './smart_job_matcher';
+import LcValidator from './lc_validator';
 function ScrollToTop() {
   const location = useLocation();
   useEffect(() => {
@@ -86,6 +87,7 @@ function App() {
           <Route path="/movie-recommender" element={<MovieRecommender lang={lang} theme={theme} />} />
           <Route path="/dash" element={<Dash lang={lang} theme={theme} />} />
           <Route path="/smart-job-matcher" element={<SmartJobMatcher lang={lang} theme={theme} />} />
+          <Route path="/lc-validator" element={<LcValidator lang={lang} theme={theme} />} />
         </Routes>
 
         {/* Global theme styles */}
