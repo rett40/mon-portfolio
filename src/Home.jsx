@@ -1,23 +1,39 @@
+// Page d'accueil du portfolio — design harmonisé avec les pages projet (FinTech cyan/bleu)
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaCode, FaDatabase, FaChartLine, FaTools, FaTimes } from "react-icons/fa";
-import img1 from './screenshots/1.jpg';
-import img2 from './screenshots/2.jpg';
-import img3 from './screenshots/3.jpeg';
-import img4 from './screenshots/rfm.png';
-import img5 from './screenshots/big0.jpg';
-import img6 from './screenshots/movies.jfif';
-import img7 from './screenshots/bi.jpg';
-import imgJobMatcher from './screenshots/logo1.png';
-import imgLcValidator from './screenshots/capture_lc_validator/acceuil.PNG';
-import profilePhoto from './screenshots/profile.jpg';
-import cvEn from './screenshots/cv_englais.pdf';
-import cvFr from './screenshots/cv_mohamed_aziz.pdf';
+import {
+  FaBrain,
+  FaDatabase,
+  FaCode,
+  FaTools,
+  FaTimes,
+  FaGithub,
+  FaEnvelope,
+  FaFileDownload,
+  FaGraduationCap,
+  FaBriefcase,
+  FaMapMarkerAlt,
+  FaStar
+} from "react-icons/fa";
+import img1 from "./screenshots/1.jpg";
+import img2 from "./screenshots/2.jpg";
+import img3 from "./screenshots/3.jpeg";
+import img4 from "./screenshots/rfm.png";
+import img5 from "./screenshots/big0.jpg";
+import img6 from "./screenshots/movies.jfif";
+import img7 from "./screenshots/bi.jpg";
+import imgJobMatcher from "./screenshots/logo1.png";
+import imgLcValidator from "./screenshots/capture_lc_validator/acceuil.PNG";
+import profilePhoto from "./screenshots/profile.jpg";
+import cvEn from "./screenshots/cv_englais.pdf";
+import cvFr from "./screenshots/cv_mohamed_aziz.pdf";
 
-// Multilingual content for projects and UI
+// ====== Projets ======
 const projects = [
   {
     id: "lc-validator",
+    route: "/lc-validator",
+    featured: true,
     title: {
       fr: "LC-Validator – Analyse de Risque des Lettres de Crédit par IA Explicable (XAI)",
       en: "LC-Validator – Letter of Credit Risk Analysis with Explainable AI (XAI)"
@@ -31,158 +47,788 @@ const projects = [
   },
   {
     id: "smart-job-matcher",
+    route: "/smart-job-matcher",
     title: {
       fr: "Smart Job Matcher – Plateforme de Recrutement Intelligent",
       en: "Smart Job Matcher – Intelligent Recruitment Platform"
     },
     image: imgJobMatcher,
     summary: {
-      fr: "Plateforme intelligente pour matcher CV et offres d'emploi avec score de compatibilité et dashboard analytique.",
-      en: "Intelligent platform to match CVs with job offers, calculate compatibility scores, and visualize matches on a dashboard."
+      fr: "Plateforme IA de matching CV ↔ offres d'emploi : algorithmes NLP, score de compatibilité et dashboards analytiques candidat / recruteur.",
+      en: "AI platform matching CVs to job offers: NLP algorithms, compatibility scoring and candidate / recruiter analytical dashboards."
     },
-    tags: ["React", "Python", "NLP", "Firebase", "Tailwind CSS", "Dashboard"]
+    tags: ["React", "Python", "Flask", "NLP", "MySQL", "JWT", "Docker"]
   },
   {
     id: "rfm-clustering",
+    route: "/rfmProject",
     title: {
       fr: "Segmentation RFM & Prédiction",
       en: "RFM Clustering & Forecasting"
     },
     image: img4,
     summary: {
-      fr: "Analyse RFM avec clustering client, segmentation produit et prévision du nombre de clients et des ventes.",
-      en: "RFM analysis with customer segmentation, product clustering, and forecasting of customers and sales."
+      fr: "Analyse RFM avec clustering clients (KMeans, CAH), segmentation produits et prévision des ventes par séries temporelles.",
+      en: "RFM analysis with customer clustering (KMeans, hierarchical), product segmentation and time-series sales forecasting."
     },
-    tags: ["Streamlit", "Python", "scikit-learn", "Pandas"]
+    tags: ["Python", "scikit-learn", "KMeans", "Streamlit", "Pandas"]
   },
   {
     id: "machine-learning",
+    route: "/machine-learning",
     title: {
-      fr: "Prédiction du niveau d'obésité",
+      fr: "Prédiction du Niveau d'Obésité",
       en: "Obesity Level Prediction"
     },
     image: img2,
     summary: {
-      fr: "Projet Data Science pour prédire le niveau d’obésité à partir des habitudes alimentaires et de l’activité physique.",
-      en: "Data Science project to predict obesity level from eating habits and physical activity."
+      fr: "Pipeline Machine Learning : comparaison de trois classifieurs (KNN, Naive Bayes, Decision Tree) et déploiement Flask.",
+      en: "Machine Learning pipeline: comparison of three classifiers (KNN, Naive Bayes, Decision Tree) with Flask deployment."
     },
-    tags: ["Python", "Flask", "scikit-learn", "Machine Learning"]
+    tags: ["Python", "scikit-learn", "Flask", "Machine Learning"]
   },
   {
     id: "water-consumption-analysis",
+    route: "/bigdata",
     title: {
-      fr: "Analyse Consommation Mondiale d'Eau",
-      en: "Global Water Consumption Analysis"
+      fr: "Big Data – Consommation Mondiale d'Eau",
+      en: "Big Data – Global Water Consumption"
     },
     image: img5,
     summary: {
-      fr: "Analyse des données de consommation d'eau dans le monde avec visualisations, segmentation et prévisions basées sur des données nettoyées.",
-      en: "Analysis of global water consumption data with visualizations, segmentation, and forecasting based on cleaned datasets."
+      fr: "Traitement Big Data avec PySpark et visualisations analytiques : pays consommateurs, par habitant, tendances et secteurs.",
+      en: "Big Data processing with PySpark and analytical visualizations: consuming countries, per capita, trends and sectors."
     },
-    tags: ["Big Data", "PySpark", "Streamlit", "Python", "Matplotlib", "Seaborn"]
+    tags: ["Big Data", "PySpark", "Streamlit", "Matplotlib", "Seaborn"]
   },
   {
     id: "superstore-dashboard",
+    route: "/dash",
     title: {
       fr: "Dashboard Superstore – Python & Power BI",
       en: "Superstore Dashboard – Python & Power BI"
     },
     image: img7,
     summary: {
-      fr: "Dashboard interactif construit avec Python (Dash, Plotly, Pandas) et Power BI pour l'analyse complète des ventes, bénéfices, segments, clients, produits et régions. KPIs dynamiques, visualisations géographiques, tendances et déploiement web.",
-      en: "Interactive dashboard built with Python (Dash, Plotly, Pandas) and Power BI for comprehensive sales, profit, segment, customer, product, and region analysis. Dynamic KPIs, geo-visualizations, trends, and web deployment."
+      fr: "Dashboard commercial complet en deux approches comparées : Dash/Plotly (Python) et Power BI avec mesures DAX.",
+      en: "Complete business dashboard through two compared approaches: Dash/Plotly (Python) and Power BI with DAX measures."
     },
-    tags: ["Python", "Dash", "Plotly", "Pandas", "Power BI", "Data Viz", "KPI", "EDA"]
+    tags: ["Python", "Dash", "Plotly", "Power BI", "DAX", "KPI"]
   },
   {
     id: "bi-vermeg",
+    route: "/bi-vermeg",
     title: {
-      fr: "Projet BI – Gestion Jira (VERMEG)",
-      en: "BI Project – Jira Management (VERMEG)"
+      fr: "Projet BI – Licences Jira (VERMEG)",
+      en: "BI Project – Jira Licenses (VERMEG)"
     },
     image: img3,
     summary: {
-      fr: "Solution décisionnelle pour optimiser la gestion des licences Jira via Power BI, Talend et Power Apps.",
-      en: "Business Intelligence solution to optimize Jira license management using Power BI, Talend and Power Apps."
+      fr: "Solution décisionnelle de bout en bout : collecte API, ETL Talend, Data Warehouse, dashboards Power BI et Power Apps sécurisé.",
+      en: "End-to-end BI solution: API collection, Talend ETL, Data Warehouse, Power BI dashboards and secure Power Apps."
     },
-    tags: ["Power BI", "Talend", "MySQL", "Power Apps"]
+    tags: ["Power BI", "Talend", "MySQL", "Power Apps", "ETL"]
   },
   {
     id: "movie-recommender",
+    route: "/movie-recommender",
     title: {
       fr: "Recommandateur de Films",
       en: "Movie Recommender"
     },
     image: img6,
     summary: {
-      fr: "Application Streamlit pour recommander des films selon les goûts d’un ou deux utilisateurs, avec filtrage par genres, années, et notes, intégrant l’API TMDB pour les affiches.",
-      en: "Streamlit app recommending movies for one or two users with filters by genre, year, rating and TMDB API integration for posters."
+      fr: "Filtrage collaboratif SVD avec mode couple (fusion des préférences), filtres avancés et affiches via l'API TMDB.",
+      en: "SVD collaborative filtering with a couple mode (preference merging), advanced filters and posters through the TMDB API."
     },
-    tags: ["Python", "Streamlit", "SVD", "TMDB API", "Recommandations"]
+    tags: ["Python", "Streamlit", "SVD", "TMDB API"]
   },
   {
     id: "pos",
+    route: "/projet/pos",
     title: {
       fr: "Système de Gestion POS",
       en: "POS Management System"
     },
     image: img1,
     summary: {
-      fr: "Solution complète de gestion de points de vente avec tableau de bord analytique, gestion multi-magasins et système de reporting avancé.",
-      en: "Comprehensive POS management solution with analytics dashboard, multi-store management, and advanced reporting system."
+      fr: "Gestion de points de vente multi-magasins : caisse, stocks, clôtures, reporting PDF/Excel et rôles sécurisés.",
+      en: "Multi-store point-of-sale management: register, inventory, closings, PDF/Excel reporting and secure roles."
     },
     tags: ["React", "Node.js", "MySQL", "JWT"]
   }
 ];
 
-
-// Multilingual UI texts
+// ====== Textes UI ======
 const texts = {
   fr: {
     name: "Aziz Ben Mohamed",
-    subtitle: "Data analyst & Data Scientist",
+    subtitle: "Data Scientist & Développeur Full-Stack AI",
+    tagline:
+      "Je conçois des solutions data de bout en bout : pipelines IA (NLP, Deep Learning, XAI), Business Intelligence et applications web full-stack — de l'exploration des données au déploiement conteneurisé.",
+    chips: {
+      degree: "Master ISIDS — Université de Tunis El Manar",
+      work: "Mémoire IA — Excellia Solution (2026)",
+      location: "Tunis, Tunisie"
+    },
     aboutTitle: "À Propos",
-    about: "Diplômé en Informatique de Gestion et actuellement en master d'Ingénierie des Systèmes d'Information et Data Science, je suis passionné par l'analyse de données, la Business Intelligence et le développement web. Je maîtrise des outils et technologies tels que Power BI, SQL, React et Next.js, que j'utilise pour transformer les données en décisions stratégiques et créer des applications performantes.",
+    about1:
+      "Diplômé en Informatique de Gestion et en fin de Master professionnel en Ingénierie des Systèmes d'Information et Data Science (ISIDS), je réalise actuellement mon mémoire de fin d'études chez Excellia Solution : une plateforme d'analyse de risque des lettres de crédit basée sur l'IA explicable (NER BERT fine-tuné, LayoutLMv3, DeBERTa NLI, XGBoost + SHAP), déployée en microservices Docker avec un cycle MLOps complet.",
+    about2:
+      "Mon profil hybride couvre toute la chaîne de valeur de la donnée : analyse et modélisation (Machine Learning, NLP), Business Intelligence (Power BI, Talend, Data Warehouse) et développement d'applications (React, Angular, Spring Boot, Flask). J'aime transformer des problèmes métier complexes en produits data fiables, explicables et déployés.",
     skillsTitle: "Compétences Techniques",
-    data: "Data Science",
-    backend: "Backend",
-    frontend: "Frontend",
-    tools: "Outils",
+    skills: {
+      ia: "Data Science & IA",
+      data: "Data Engineering & BI",
+      dev: "Développement Full-Stack",
+      tools: "Outils & MLOps"
+    },
     projectsTitle: "Projets Récents",
-    cv: "Voir mon CV"
+    featured: "Projet phare",
+    cv: "Télécharger mon CV",
+    contactTitle: "Contact",
+    contactText:
+      "Un projet data, une opportunité ou une question ? Discutons-en.",
+    footer: "Portfolio — Aziz Ben Mohamed"
   },
   en: {
     name: "Aziz Ben Mohamed",
-    subtitle: "Data analyst & Data Scientist",
+    subtitle: "Data Scientist & Full-Stack AI Developer",
+    tagline:
+      "I build end-to-end data solutions: AI pipelines (NLP, Deep Learning, XAI), Business Intelligence and full-stack web applications — from data exploration to containerized deployment.",
+    chips: {
+      degree: "ISIDS Master — University of Tunis El Manar",
+      work: "AI Thesis — Excellia Solution (2026)",
+      location: "Tunis, Tunisia"
+    },
     aboutTitle: "About",
-    about: "Graduated in Management IT and currently pursuing a master's in Information Systems Engineering and Data Science, I am passionate about data analysis, Business Intelligence, and web development. I master tools and technologies such as Power BI, SQL, React, and Next.js, which I use to turn data into strategic decisions and create high-performance applications.",
+    about1:
+      "Graduated in Management IT and finishing a professional Master's in Information Systems Engineering and Data Science (ISIDS), I am currently completing my graduation thesis at Excellia Solution: a Letter of Credit risk analysis platform based on Explainable AI (fine-tuned BERT NER, LayoutLMv3, DeBERTa NLI, XGBoost + SHAP), deployed as Docker microservices with a full MLOps lifecycle.",
+    about2:
+      "My hybrid profile covers the whole data value chain: analysis and modeling (Machine Learning, NLP), Business Intelligence (Power BI, Talend, Data Warehouse) and application development (React, Angular, Spring Boot, Flask). I enjoy turning complex business problems into reliable, explainable and deployed data products.",
     skillsTitle: "Technical Skills",
-    data: "Data Science",
-    backend: "Backend",
-    frontend: "Frontend",
-    tools: "Tools",
+    skills: {
+      ia: "Data Science & AI",
+      data: "Data Engineering & BI",
+      dev: "Full-Stack Development",
+      tools: "Tools & MLOps"
+    },
     projectsTitle: "Recent Projects",
-    cv: "View my CV"
+    featured: "Featured project",
+    cv: "Download my CV",
+    contactTitle: "Contact",
+    contactText: "A data project, an opportunity or a question? Let's talk.",
+    footer: "Portfolio — Aziz Ben Mohamed"
   }
 };
 
+// ====== Compétences ======
+const skillGroups = [
+  {
+    key: "ia",
+    icon: <FaBrain />,
+    color: "#a78bfa",
+    items: {
+      fr: [
+        "Machine Learning (scikit-learn, XGBoost)",
+        "Deep Learning & NLP (BERT, LayoutLMv3, DeBERTa, Hugging Face)",
+        "IA Explicable — XAI (SHAP, LIME)",
+        "Pandas / NumPy · Séries temporelles"
+      ],
+      en: [
+        "Machine Learning (scikit-learn, XGBoost)",
+        "Deep Learning & NLP (BERT, LayoutLMv3, DeBERTa, Hugging Face)",
+        "Explainable AI — XAI (SHAP, LIME)",
+        "Pandas / NumPy · Time series"
+      ]
+    }
+  },
+  {
+    key: "data",
+    icon: <FaDatabase />,
+    color: "#22d3ee",
+    items: {
+      fr: [
+        "Power BI (DAX) · Dash / Plotly",
+        "ETL Talend · Data Warehouse",
+        "PySpark · Big Data",
+        "SQL avancé (PostgreSQL, MySQL, JSONB)"
+      ],
+      en: [
+        "Power BI (DAX) · Dash / Plotly",
+        "Talend ETL · Data Warehouse",
+        "PySpark · Big Data",
+        "Advanced SQL (PostgreSQL, MySQL, JSONB)"
+      ]
+    }
+  },
+  {
+    key: "dev",
+    icon: <FaCode />,
+    color: "#34d399",
+    items: {
+      fr: [
+        "React · Angular",
+        "Spring Boot (Java) · Node.js",
+        "Flask / FastAPI (Python)",
+        "APIs REST · JWT / RBAC"
+      ],
+      en: [
+        "React · Angular",
+        "Spring Boot (Java) · Node.js",
+        "Flask / FastAPI (Python)",
+        "REST APIs · JWT / RBAC"
+      ]
+    }
+  },
+  {
+    key: "tools",
+    icon: <FaTools />,
+    color: "#fb923c",
+    items: {
+      fr: [
+        "Docker · Git / GitHub",
+        "MLOps : MLflow, DVC, Evidently AI",
+        "MinIO (stockage objet)",
+        "Jira · Agile / Scrum · CRISP-DM"
+      ],
+      en: [
+        "Docker · Git / GitHub",
+        "MLOps: MLflow, DVC, Evidently AI",
+        "MinIO (object storage)",
+        "Jira · Agile / Scrum · CRISP-DM"
+      ]
+    }
+  }
+];
+
+// ====== Thèmes ======
+const lightTheme = `
+  .home-container.light {
+    --bg-primary: #f4f8fb;
+    --bg-secondary: #ffffff;
+    --text-primary: #0f2436;
+    --text-secondary: #46607a;
+    --accent-primary: #0891b2;
+    --accent-secondary: #2563eb;
+    --card-bg: #ffffff;
+    --card-border: #dbe7f0;
+    --code-bg: #eef5fa;
+    --hero-glow: rgba(8, 145, 178, 0.12);
+    --shadow-sm: 0 1px 3px rgba(15, 36, 54, 0.08);
+    --shadow-md: 0 4px 12px rgba(15, 36, 54, 0.1);
+    --shadow-lg: 0 12px 30px rgba(15, 36, 54, 0.12);
+  }
+`;
+
+const darkTheme = `
+  .home-container.dark {
+    --bg-primary: #0a1220;
+    --bg-secondary: #101c2e;
+    --text-primary: #e8f1f8;
+    --text-secondary: #9fb4c8;
+    --accent-primary: #22d3ee;
+    --accent-secondary: #60a5fa;
+    --card-bg: #101c2e;
+    --card-border: #1e3048;
+    --code-bg: #0d1727;
+    --hero-glow: rgba(34, 211, 238, 0.1);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.45);
+    --shadow-lg: 0 12px 30px rgba(0, 0, 0, 0.5);
+  }
+`;
+
+const baseStyles = `
+  .home-container {
+    min-height: 100vh;
+    padding: 2rem;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    transition: background 0.3s ease, color 0.3s ease;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .home-content {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* ===== Hero ===== */
+  .home-hero {
+    position: relative;
+    text-align: center;
+    padding: 4rem 2rem 2.75rem;
+    border-radius: 24px;
+    background:
+      radial-gradient(ellipse at 20% 0%, var(--hero-glow), transparent 55%),
+      radial-gradient(ellipse at 80% 100%, var(--hero-glow), transparent 55%),
+      var(--card-bg);
+    border: 1px solid var(--card-border);
+    box-shadow: var(--shadow-lg);
+    margin-bottom: 2.5rem;
+    overflow: hidden;
+  }
+
+  .home-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 3px;
+    background: linear-gradient(90deg, #22d3ee, #60a5fa, #a78bfa);
+  }
+
+  .home-profile {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    margin-bottom: 1.4rem;
+  }
+
+  .home-profile-photo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--accent-primary);
+    box-shadow: 0 0 0 6px var(--hero-glow), var(--shadow-lg);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .home-profile:hover .home-profile-photo {
+    transform: scale(1.04);
+    box-shadow: 0 0 0 8px var(--hero-glow), 0 0 24px var(--accent-primary);
+  }
+
+  .home-zoom-hint {
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--accent-primary);
+    color: #04141c;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.2rem 0.7rem;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .home-hero h1 {
+    font-size: 2.8rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin: 0 0 0.4rem;
+    background: linear-gradient(120deg, var(--accent-primary), var(--accent-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .home-subtitle {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 1.1rem;
+  }
+
+  .home-tagline {
+    max-width: 720px;
+    margin: 0 auto 1.6rem;
+    color: var(--text-secondary);
+    font-size: 1.02rem;
+    line-height: 1.65;
+  }
+
+  .home-chips {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1.8rem;
+  }
+
+  .home-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 1rem;
+    border-radius: 999px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    border: 1px solid var(--card-border);
+    background: var(--code-bg);
+    color: var(--text-primary);
+  }
+
+  .home-chip svg { color: var(--accent-primary); }
+
+  .home-actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.75rem 1.6rem;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.98rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .home-btn.primary {
+    color: #04141c;
+    background: linear-gradient(120deg, var(--accent-primary), var(--accent-secondary));
+    box-shadow: var(--shadow-md);
+    border: none;
+  }
+
+  .home-btn.secondary {
+    color: var(--text-primary);
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .home-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .home-btn.secondary:hover {
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+  }
+
+  /* ===== Sections ===== */
+  .home-section {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 2.25rem;
+    margin-bottom: 2.5rem;
+    box-shadow: var(--shadow-md);
+  }
+
+  .home-section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.55rem;
+    font-weight: 700;
+    margin: 0 0 1.5rem;
+    color: var(--text-primary);
+  }
+
+  .home-section-title::before {
+    content: '';
+    width: 5px;
+    height: 1.6rem;
+    border-radius: 3px;
+    background: linear-gradient(to bottom, var(--accent-primary), var(--accent-secondary));
+  }
+
+  /* ===== À propos ===== */
+  .home-about p {
+    color: var(--text-secondary);
+    font-size: 1.02rem;
+    line-height: 1.75;
+    margin: 0 0 1rem;
+  }
+
+  .home-about p:last-child { margin-bottom: 0; }
+
+  .home-about strong { color: var(--text-primary); }
+
+  /* ===== Compétences ===== */
+  .home-skills {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .home-skill-card {
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    background: var(--bg-secondary);
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .home-skill-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--skill-color);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .home-skill-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+    color: var(--skill-color);
+    background: color-mix(in srgb, var(--skill-color) 12%, transparent);
+    border: 1px solid var(--skill-color);
+    margin-bottom: 1rem;
+  }
+
+  .home-skill-card h3 {
+    margin: 0 0 0.9rem;
+    font-size: 1.08rem;
+    color: var(--text-primary);
+  }
+
+  .home-skill-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  .home-skill-card li {
+    display: flex;
+    gap: 0.55rem;
+    align-items: flex-start;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .home-skill-card li::before {
+    content: '▸';
+    color: var(--skill-color);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  /* ===== Projets ===== */
+  .home-projects {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .home-project-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--bg-secondary);
+    cursor: pointer;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .home-project-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--accent-primary);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .home-project-image-wrap {
+    position: relative;
+    height: 185px;
+    overflow: hidden;
+    background: var(--code-bg);
+    border-bottom: 1px solid var(--card-border);
+  }
+
+  .home-project-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+    transition: transform 0.35s ease;
+  }
+
+  .home-project-card:hover .home-project-image {
+    transform: scale(1.05);
+  }
+
+  .home-featured-badge {
+    position: absolute;
+    top: 0.8rem;
+    left: 0.8rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #04141c;
+    background: linear-gradient(120deg, #22d3ee, #60a5fa);
+    box-shadow: 0 0 14px rgba(34, 211, 238, 0.5);
+    z-index: 1;
+  }
+
+  .home-project-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 1.3rem 1.4rem 1.4rem;
+  }
+
+  .home-project-title {
+    margin: 0 0 0.55rem;
+    font-size: 1.08rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.4;
+  }
+
+  .home-project-summary {
+    margin: 0 0 1rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  .home-project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .home-project-tag {
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--accent-primary);
+    background: var(--code-bg);
+    border: 1px solid var(--card-border);
+    transition: all 0.25s ease;
+  }
+
+  .home-project-card:hover .home-project-tag {
+    border-color: var(--accent-primary);
+  }
+
+  /* ===== Contact / Footer ===== */
+  .home-contact {
+    text-align: center;
+  }
+
+  .home-contact .home-section-title {
+    justify-content: center;
+  }
+
+  .home-contact p {
+    color: var(--text-secondary);
+    margin: 0 0 1.5rem;
+    font-size: 1rem;
+  }
+
+  .home-footer {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    padding: 1rem 0 0.5rem;
+  }
+
+  /* ===== Modal photo ===== */
+  .home-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(3, 8, 15, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+  }
+
+  .home-modal-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 90%;
+  }
+
+  .home-modal-image {
+    max-width: 100%;
+    max-height: 80vh;
+    border-radius: 16px;
+    border: 1px solid var(--card-border);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+  }
+
+  .home-modal-close {
+    position: absolute;
+    top: -48px;
+    right: 0;
+    background: rgba(255, 255, 255, 0.12);
+    border: none;
+    color: #fff;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+  }
+
+  .home-modal-close:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: rotate(90deg);
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 768px) {
+    .home-container { padding: 1rem; }
+    .home-hero { padding: 4.5rem 1.25rem 2rem; }
+    .home-hero h1 { font-size: 2.1rem; }
+    .home-subtitle { font-size: 1.05rem; }
+    .home-section { padding: 1.5rem; }
+    .home-projects { grid-template-columns: 1fr; }
+  }
+`;
+
 export default function Home({ lang = "fr", theme = "light" }) {
   const navigate = useNavigate();
+  const t = texts[lang];
   const [showProfileModal, setShowProfileModal] = useState(false);
-  const profileRef = useRef(null);
   const modalContentRef = useRef(null);
   const longPressTimer = useRef(null);
   const [isPressed, setIsPressed] = useState(false);
 
-  // Handle touch/click start
+  // Injection des styles (même mécanisme que ProjectPage)
+  useEffect(() => {
+    const styleSheet = document.createElement("style");
+    styleSheet.textContent = baseStyles + (theme === "dark" ? darkTheme : lightTheme);
+    document.head.appendChild(styleSheet);
+    return () => {
+      document.head.removeChild(styleSheet);
+    };
+  }, [theme]);
+
+  // Zoom photo : appui long
   const handleStart = () => {
     setIsPressed(true);
     longPressTimer.current = setTimeout(() => {
       setShowProfileModal(true);
-    }, 500); // 500ms delay for long press
+    }, 500);
   };
 
-  // Handle touch/click end
   const handleEnd = () => {
     setIsPressed(false);
     if (longPressTimer.current) {
@@ -190,571 +836,204 @@ export default function Home({ lang = "fr", theme = "light" }) {
     }
   };
 
-  // Close modal when clicking outside the image
   const handleModalClick = (e) => {
     if (modalContentRef.current && !modalContentRef.current.contains(e.target)) {
       setShowProfileModal(false);
     }
   };
 
-  // Close modal on escape key
   useEffect(() => {
     const handleEscape = (e) => {
-      if (e.keyCode === 27) {
-        setShowProfileModal(false);
-      }
+      if (e.keyCode === 27) setShowProfileModal(false);
     };
-
     if (showProfileModal) {
-      document.addEventListener('keydown', handleEscape);
-      document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+      document.addEventListener("keydown", handleEscape);
+      document.body.style.overflow = "hidden";
     }
-
     return () => {
-      document.removeEventListener('keydown', handleEscape);
-      document.body.style.overflow = 'unset';
+      document.removeEventListener("keydown", handleEscape);
+      document.body.style.overflow = "unset";
     };
   }, [showProfileModal]);
 
   return (
-    <div className={`container ${theme}`}>
-      {/* Header Section */}
-      <header className="header">
-        <div 
-          className="profile-container"
-          ref={profileRef}
-          onMouseDown={handleStart}
-          onMouseUp={handleEnd}
-          onMouseLeave={handleEnd}
-          onTouchStart={handleStart}
-          onTouchEnd={handleEnd}
-          style={{ cursor: 'pointer' }}
-        >
-          <img
-            src={profilePhoto}
-            alt="Aziz Ben Mohamed"
-            className="profile-photo"
-            style={{ transform: isPressed ? 'scale(0.95)' : 'scale(1)' }}
-          />
-          {isPressed && <div className="zoom-hint">Maintenir pour zoomer</div>}
-        </div>
-        <h1 className="title">{texts[lang].name}</h1>
-        <p className="subtitle">{texts[lang].subtitle}</p>
-        
-        {/* CV Button */}
-        <a
-          href={lang === "fr" ? cvFr : cvEn}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="cv-button"
-        >
-          <span style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "0.7rem",
-            fontWeight: 600,
-            fontSize: "1.08rem"
-          }}>
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" style={{verticalAlign: "middle"}}>
-              <rect x="4" y="2" width="16" height="20" rx="4" fill="#fff" stroke="#3498db" strokeWidth="2"/>
-              <path d="M8 6h8M8 10h8M8 14h4" stroke="#3498db" strokeWidth="2" strokeLinecap="round"/>
-            </svg>
-            {texts[lang].cv}
-          </span>
-        </a>
-      </header>
+    <div className={`home-container ${theme}`}>
+      <div className="home-content">
+        {/* ===== Hero ===== */}
+        <header className="home-hero">
+          <div
+            className="home-profile"
+            onMouseDown={handleStart}
+            onMouseUp={handleEnd}
+            onMouseLeave={handleEnd}
+            onTouchStart={handleStart}
+            onTouchEnd={handleEnd}
+          >
+            <img
+              src={profilePhoto}
+              alt="Aziz Ben Mohamed"
+              className="home-profile-photo"
+              style={{ transform: isPressed ? "scale(0.95)" : undefined }}
+            />
+            {isPressed && (
+              <div className="home-zoom-hint">
+                {lang === "fr" ? "Maintenir pour zoomer" : "Hold to zoom"}
+              </div>
+            )}
+          </div>
 
-      {/* Profile Modal */}
-      {showProfileModal && (
-        <div className="profile-modal" onClick={handleModalClick}>
-          <div className="profile-modal-content" ref={modalContentRef}>
-            <button 
-              className="profile-modal-close"
-              onClick={() => setShowProfileModal(false)}
-              aria-label="Fermer"
+          <h1>{t.name}</h1>
+          <p className="home-subtitle">{t.subtitle}</p>
+          <p className="home-tagline">{t.tagline}</p>
+
+          <div className="home-chips">
+            <span className="home-chip">
+              <FaGraduationCap /> {t.chips.degree}
+            </span>
+            <span className="home-chip">
+              <FaBriefcase /> {t.chips.work}
+            </span>
+            <span className="home-chip">
+              <FaMapMarkerAlt /> {t.chips.location}
+            </span>
+          </div>
+
+          <div className="home-actions">
+            <a
+              href={lang === "fr" ? cvFr : cvEn}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="home-btn primary"
             >
-              <FaTimes />
-            </button>
-            <div className="profile-modal-image-container">
+              <FaFileDownload /> {t.cv}
+            </a>
+            <a
+              href="https://github.com/rett40"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="home-btn secondary"
+            >
+              <FaGithub /> GitHub
+            </a>
+          </div>
+        </header>
+
+        {/* ===== Modal photo ===== */}
+        {showProfileModal && (
+          <div className="home-modal" onClick={handleModalClick}>
+            <div className="home-modal-content" ref={modalContentRef}>
+              <button
+                className="home-modal-close"
+                onClick={() => setShowProfileModal(false)}
+                aria-label="Fermer"
+              >
+                <FaTimes />
+              </button>
               <img
                 src={profilePhoto}
                 alt="Aziz Ben Mohamed"
-                className="profile-modal-image"
+                className="home-modal-image"
               />
             </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {/* About Section */}
-      <section className="section">
-        <h2 className="section-title">{texts[lang].aboutTitle}</h2>
-        <div className="about-content">
-          <p>
-            {texts[lang].about}
-          </p>
-        </div>
-      </section>
-
-      {/* Skills Section */}
-      <section className="section">
-        <h2 className="section-title">{texts[lang].skillsTitle}</h2>
-        <div className="skills-grid">
-          <div className="skill-card">
-            <FaChartLine className="skill-icon" />
-            <h3>{texts[lang].data}</h3>
-            <ul>
-              <li>Pandas / NumPy</li>
-              <li>Machine Learning</li>
-              <li>{lang === "fr" ? "Visualisation de données" : "Data visualization"}</li>
-              <li>{lang === "fr" ? "SQL avancé" : "Advanced SQL"}</li>
-            </ul>
+        {/* ===== À propos ===== */}
+        <section className="home-section">
+          <h2 className="home-section-title">{t.aboutTitle}</h2>
+          <div className="home-about">
+            <p>{t.about1}</p>
+            <p>{t.about2}</p>
           </div>
-          <div className="skill-card">
-            <FaDatabase className="skill-icon" />
-            <h3>{texts[lang].backend}</h3>
-            <ul>
-              <li>Node.js / Express</li>
-              <li>PHP / Laravel</li>
-              <li>Python / Django</li>
-              <li>RESTful APIs</li>
-            </ul>
-          </div>
+        </section>
 
-          
-          <div className="skill-card">
-            <FaCode className="skill-icon" />
-            <h3>{texts[lang].frontend}</h3>
-            <ul>
-              <li>React.js / Redux</li>
-              <li>Vue.js</li>
-              <li>HTML5 / CSS3 / Sass</li>
-              <li>Tailwind CSS</li>
-            </ul>
-          </div>
-
-          
-
-          <div className="skill-card">
-            <FaTools className="skill-icon" />
-            <h3>{texts[lang].tools}</h3>
-            <ul>
-              <li>Git / GitHub</li>
-              <li>Docker</li>
-              <li>CI/CD</li>
-              <li>Jira / Agile</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* Projects Section */}
-      <section className="section">
-        <h2 className="section-title">{texts[lang].projectsTitle}</h2>
-        <div className="projects-grid">
-          {projects.map((project) => (
-            <div
-              key={project.id}
-              className="project-card"
-              onClick={() => {
-                if (project.id === "machine-learning") {
-                  navigate("/machine-learning");
-                } else if (project.id === "bi-vermeg") {
-                  navigate("/bi-vermeg");
-                } else if (project.id === "rfm-clustering") {
-                  navigate("/Rfmproject");
-                }  else if (project.id === "water-consumption-analysis") {
-                  navigate("/bigdata");
-                }  else if (project.id === "movie-recommender") {
-                  navigate("/movie-recommender");
-                } else if (project.id === "superstore-dashboard") {
-                  navigate("/dash");
-                } else if (project.id === "smart-job-matcher") {
-                  navigate("/smart-job-matcher");
-                } else if (project.id === "lc-validator") {
-                  navigate("/lc-validator");
-                } else {
-                  navigate(`/projet/${project.id}`);
-                }
-              }}
-            >
-              <div className="project-image-container">
-                <img
-                  src={project.image}
-                  alt={project.title[lang]}
-                  className="project-image"
-                />
-              </div>
-              <div className="project-content">
-                <h3 className="project-title">{project.title[lang]}</h3>
-                <p className="project-summary">{project.summary[lang]}</p>
-                <div className="project-tags">
-                  {project.tags.map((tag, index) => (
-                    <span key={index} className="tag">{tag}</span>
+        {/* ===== Compétences ===== */}
+        <section className="home-section">
+          <h2 className="home-section-title">{t.skillsTitle}</h2>
+          <div className="home-skills">
+            {skillGroups.map((group) => (
+              <div
+                key={group.key}
+                className="home-skill-card"
+                style={{ "--skill-color": group.color }}
+              >
+                <div className="home-skill-icon">{group.icon}</div>
+                <h3>{t.skills[group.key]}</h3>
+                <ul>
+                  {group.items[lang].map((item, i) => (
+                    <li key={i}>{item}</li>
                   ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ===== Projets ===== */}
+        <section className="home-section">
+          <h2 className="home-section-title">{t.projectsTitle}</h2>
+          <div className="home-projects">
+            {projects.map((project) => (
+              <div
+                key={project.id}
+                className="home-project-card"
+                onClick={() => navigate(project.route)}
+              >
+                <div className="home-project-image-wrap">
+                  {project.featured && (
+                    <span className="home-featured-badge">
+                      <FaStar /> {t.featured}
+                    </span>
+                  )}
+                  <img
+                    src={project.image}
+                    alt={project.title[lang]}
+                    className="home-project-image"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="home-project-body">
+                  <h3 className="home-project-title">{project.title[lang]}</h3>
+                  <p className="home-project-summary">{project.summary[lang]}</p>
+                  <div className="home-project-tags">
+                    {project.tags.map((tag, index) => (
+                      <span key={index} className="home-project-tag">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
-      </section>
+            ))}
+          </div>
+        </section>
 
-      {/* CSS Styles */}
-      <style jsx>{`
-        .container {
-          max-width: 1200px;
-          margin: 0 auto;
-          padding: 2rem;
-          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-          color: #333;
-          background: #f7f9fa;
-          transition: background 0.3s, color 0.3s;
-        }
-        .dark.container {
-          background: #181c22;
-          color: #f7f9fa;
-        }
-        .section-title,
-        .title {
-          color: #2c3e50;
-        }
-        .dark .section-title,
-        .dark .title {
-          color: #e0e6ed;
-        }
-        .skill-card,
-        .project-card {
-          background: #fff;
-          color: #222;
-        }
-        .dark .skill-card,
-        .dark .project-card {
-          background: #23272f;
-          color: #f7f9fa;
-        }
-        .project-summary {
-          color: #7f8c8d;
-        }
-        .dark .project-summary {
-          color: #b0b8c1;
-        }
-        .header {
-          text-align: center;
-          margin-bottom: 3rem;
-        }
-        .profile-container {
-          width: 150px;
-          height: 150px;
-          margin: 0 auto 1.5rem;
-          border-radius: 50%;
-          overflow: hidden;
-          border: 4px solid #3498db;
-          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-          position: relative;
-        }
-        .profile-photo {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          transition: transform 0.3s ease;
-        }
-        .profile-container:hover .profile-photo {
-          transform: scale(1.05);
-        }
-        .title {
-          font-size: 2.5rem;
-          color: #2c3e50;
-          margin-bottom: 0.5rem;
-        }
-        .subtitle {
-          font-size: 1.2rem;
-          color: #7f8c8d;
-          font-weight: 300;
-        }
-        .section {
-          margin-bottom: 3rem;
-        }
-        .section-title {
-          font-size: 1.8rem;
-          color: #2c3e50;
-          border-bottom: 2px solid #3498db;
-          padding-bottom: 0.5rem;
-          margin-bottom: 1.5rem;
-        }
-        .about-content {
-          line-height: 1.6;
-          font-size: 1.1rem;
-        }
-        .skills-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-          gap: 1.5rem;
-        }
-        .skill-card {
-          background: #fff;
-          border-radius: 8px;
-          padding: 1.5rem;
-          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-          transition: transform 0.3s ease;
-        }
-        .dark .skill-card {
-          background: #23272f;
-          color: #f7f9fa;
-        }
-        .skill-card:hover {
-          transform: translateY(-5px);
-        }
-        .skill-icon {
-          font-size: 2rem;
-          color: #3498db;
-          margin-bottom: 1rem;
-        }
-        .skill-card h3 {
-          color: #2c3e50;
-          margin-bottom: 1rem;
-        }
-        .dark .skill-card h3 {
-          color: #e0e6ed;
-        }
-        .skill-card ul {
-          list-style-type: none;
-          padding: 0;
-        }
-        .skill-card li {
-          margin-bottom: 0.5rem;
-          position: relative;
-          padding-left: 1.5rem;
-        }
-        .skill-card li:before {
-          content: "•";
-          color: #3498db;
-          position: absolute;
-          left: 0;
-        }
-        .projects-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-          gap: 2rem;
-        }
-        .project-card {
-          background: #fff;
-          border-radius: 8px;
-          overflow: hidden;
-          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-          transition: all 0.3s ease;
-          cursor: pointer;
-        }
-        .dark .project-card {
-          background: #23272f;
-          color: #f7f9fa;
-        }
-        .project-card:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-        .project-image-container {
-          height: 200px;
-          overflow: hidden;
-        }
-        .project-image {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          transition: transform 0.5s ease;
-        }
-        .project-card:hover .project-image {
-          transform: scale(1.05);
-        }
-        .project-content {
-          padding: 1.5rem;
-        }
-        .project-title {
-          font-size: 1.3rem;
-          color: #2c3e50;
-          margin-bottom: 0.5rem;
-        }
-        .dark .project-title {
-          color: #e0e6ed;
-        }
-        .project-summary {
-          color: #7f8c8d;
-          line-height: 1.5;
-          margin-bottom: 1rem;
-        }
-        .dark .project-summary {
-          color: #b0b8c1;
-        }
-        .project-tags {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 0.5rem;
-        }
-        .tag {
-          background: #e0f7fa;
-          color: #00838f;
-          padding: 0.3rem 0.8rem;
-          border-radius: 20px;
-          font-size: 0.8rem;
-          font-weight: 500;
-        }
-        .dark .tag {
-          background: #263445;
-          color: #7fd8e7;
-        }
-        
-        .zoom-hint {
-          position: absolute;
-          bottom: 10px;
-          left: 0;
-          right: 0;
-          text-align: center;
-          background: rgba(0, 0, 0, 0.7);
-          color: white;
-          padding: 4px;
-          font-size: 12px;
-          border-radius: 0 0 75px 75px;
-          opacity: 1;
-          transition: opacity 0.2s;
-        }
-        
-        .profile-modal {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background-color: rgba(0, 0, 0, 0.85);
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          z-index: 1000;
-          cursor: pointer;
-          backdrop-filter: blur(8px);
-        }
-        
-        .profile-modal-content {
-          position: relative;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          width: 100%;
-          height: 100%;
-          pointer-events: none;
-        }
-        
-        .profile-modal-close {
-          position: absolute;
-          top: 20px;
-          right: 20px;
-          background: rgba(0, 0, 0, 0.5);
-          border: none;
-          color: white;
-          font-size: 28px;
-          width: 50px;
-          height: 50px;
-          border-radius: 50%;
-          cursor: pointer;
-          z-index: 1001;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          transition: background 0.3s;
-          pointer-events: auto;
-        }
-        
-        .profile-modal-close:hover {
-          background: rgba(0, 0, 0, 0.7);
-        }
-        
-        .profile-modal-image-container {
-          width: 250px;
-          height: 250px;
-          border-radius: 50%;
-          overflow: hidden;
-          border: 4px solid rgba(255, 255, 255, 0.2);
-          box-shadow: 0 0 40px rgba(52, 152, 219, 0.4);
-          animation: zoomIn 0.3s ease-out;
-          pointer-events: none;
-        }
-        
-        .profile-modal-image {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          pointer-events: none;
-        }
-        
-        @keyframes zoomIn {
-          from {
-            transform: scale(0.8);
-            opacity: 0;
-          }
-          to {
-            transform: scale(1);
-            opacity: 1;
-          }
-        }
-        
-        @media (max-width: 768px) {
-          .container {
-            padding: 1.5rem;
-          }
-          .title {
-            font-size: 2rem;
-          }
-          .section-title {
-            font-size: 1.5rem;
-          }
-          .profile-container {
-            width: 120px;
-            height: 120px;
-          }
-          
-          .profile-modal-image-container {
-            width: 200px;
-            height: 200px;
-          }
-          
-          .profile-modal-close {
-            top: 15px;
-            right: 15px;
-            width: 40px;
-            height: 40px;
-            font-size: 22px;
-          }
-        }
-        
-        @media (min-width: 1024px) {
-          .profile-modal-image-container {
-            width: 280px;
-            height: 280px;
-          }
-        }
-      `}</style>
-      <style jsx>{`
-        .cv-button {
-          display: inline-block;
-          margin-top: 1.2rem;
-          background: linear-gradient(90deg, #3498db 0%, #2ecc71 100%);
-          color: #fff;
-          padding: 0.8rem 2.2rem;
-          border-radius: 30px;
-          font-size: 1.08rem;
-          font-weight: 600;
-          text-decoration: none;
-          box-shadow: 0 4px 16px rgba(52,152,219,0.12);
-          border: none;
-          letter-spacing: 0.03em;
-          transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
-          position: relative;
-          overflow: hidden;
-        }
-        .cv-button:hover {
-          background: linear-gradient(90deg, #217dbb 0%, #27ae60 100%);
-          transform: translateY(-2px) scale(1.05);
-          box-shadow: 0 8px 24px rgba(52,152,219,0.18);
-        }
-      `}</style>
+        {/* ===== Contact ===== */}
+        <section className="home-section home-contact">
+          <h2 className="home-section-title">{t.contactTitle}</h2>
+          <p>{t.contactText}</p>
+          <div className="home-actions">
+            <a
+              href="mailto:aziz40benmohamed@gmail.com"
+              className="home-btn primary"
+            >
+              <FaEnvelope /> aziz40benmohamed@gmail.com
+            </a>
+            <a
+              href="https://github.com/rett40"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="home-btn secondary"
+            >
+              <FaGithub /> github.com/rett40
+            </a>
+          </div>
+        </section>
+
+        <footer className="home-footer">
+          © {new Date().getFullYear()} {t.footer}
+        </footer>
+      </div>
     </div>
   );
 }
