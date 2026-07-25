@@ -25,8 +25,8 @@ import img7 from "./screenshots/bi.jpg";
 import imgJobMatcher from "./screenshots/logo1.png";
 import imgLcValidator from "./screenshots/capture_lc_validator/acceuil.PNG";
 import profilePhoto from "./screenshots/profile.jpg";
-import cvEn from "./screenshots/cv_englais.pdf";
-import cvFr from "./screenshots/cv_mohamed_aziz.pdf";
+import cvEn from "./screenshots/cv-mohamedaziz-eng.pdf";
+import cvFr from "./screenshots/cv-mohamedaziz-fr.pdf";
 
 // ====== Projets ======
 const projects = [
